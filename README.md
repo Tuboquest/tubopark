@@ -13,7 +13,7 @@ See the APP tech spec [here](https://www.notion.so/Mobile-APP-Tech-Spec-1c303336
    ```bash
    yarn install
    # or
-   yarn 
+   yarn
    ```
 
 2. Start the app
