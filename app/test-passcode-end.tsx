@@ -1,8 +1,9 @@
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Text, TouchableOpacity, View } from "react-native";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 export default function TestPasscodeEndScreen() {
+  const { passcode } = useLocalSearchParams();
   return (
     <View
       style={{
@@ -30,7 +31,7 @@ export default function TestPasscodeEndScreen() {
           textAlign: "center",
         }}
       >
-        CORRECT PASSCODE!
+        {passcode ? `Passcode created:\n${passcode}` : "CORRECT PASSCODE!"}
       </Text>
       <Feather
         name="check-circle"

@@ -24,6 +24,7 @@ export type PassCodeProps = {
   onEnd: (code: string) => void;
   withValidation?: boolean;
   shouldMatch?: string;
+  withConfirmation?: boolean;
 } & Pick<KeyboardProps, "color" | "fromColor" | "toColor" | "keySize"> &
   Pick<
     ValidateButtonProps,
@@ -35,6 +36,8 @@ export type PassCodeHeaderProps = DigitsProps & {
   title?: string;
   color?: string;
   subtitle?: string;
+  withConfirmation?: boolean;
+  confirmationCode: number[];
 };
 
 // KEYBOARD ========================================

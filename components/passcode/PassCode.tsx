@@ -26,12 +26,14 @@ import { ValidateButton } from "@/components/passcode/ValidateButton";
 
 export const PassCode: FC<PassCodeProps> = (props) => {
   const [code, setCode] = useState<number[]>([]);
+  const [confirmationCode, setConfirmationCode] = useState<number[]>([]);
   const [isWrong, setIsWrong] = useState(false);
   const handlePress = (value: number | string) => {
     if (value === "delete" && !isWrong) {
       setCode(code.slice(0, -1));
     } else if (value === "clear" && !isWrong) {
       setCode([]);
+      setConfirmationCode([]);
     } else {
       if (typeof value !== "string" && code?.length < 4)
         setCode([...code, value]);
@@ -72,6 +74,8 @@ export const PassCode: FC<PassCodeProps> = (props) => {
         activeColor={props?.activeColor ?? DEFAULT_CODE_ACTIVE_COLOR}
         errorColor={props?.errorColor ?? DEFAULT_DIGIT_ERROR}
         color={props?.color ?? DEFAULT_COLOR}
+        withConfirmation={props?.withConfirmation}
+        confirmationCode={confirmationCode}
       />
       <Keyboard
         onPress={handlePress}
@@ -84,15 +88,31 @@ export const PassCode: FC<PassCodeProps> = (props) => {
         <ValidateButton
           isVisible={code?.length === 4}
           onPress={() => {
-            if (!props?.shouldMatch) {
-              props?.onEnd(code.join(""));
-            } else {
-              const isMatching = code.join("") === props?.shouldMatch;
-              if (isMatching) {
+            if (!props?.withConfirmation) {
+              if (!props?.shouldMatch) {
                 props?.onEnd(code.join(""));
               } else {
+                const isMatching = code.join("") === props?.shouldMatch;
+                if (isMatching) {
+                  props?.onEnd(code.join(""));
+                } else {
+                  setCode([]);
+                  setIsWrong(true);
+                }
+              }
+            } else {
+              if (confirmationCode?.length === 0) {
+                setConfirmationCode(code);
                 setCode([]);
-                setIsWrong(true);
+              } else {
+                const isMatching = code.join("") === confirmationCode.join("");
+                if (isMatching) {
+                  props?.onEnd(code.join(""));
+                } else {
+                  setCode([]);
+                  setConfirmationCode([]);
+                  setIsWrong(true);
+                }
               }
             }
           }}
@@ -117,6 +137,8 @@ const PassCodeHeader: FC<PassCodeHeaderProps> = ({
   activeColor,
   inactiveColor,
   errorColor,
+  withConfirmation,
+  confirmationCode,
 }) => {
   return (
     <View
@@ -165,6 +187,19 @@ const PassCodeHeader: FC<PassCodeHeaderProps> = ({
         activeColor={activeColor}
         errorColor={errorColor}
       />
+      {withConfirmation && confirmationCode?.length > 0 && (
+        <Text
+          style={{
+            position: "absolute",
+            bottom: 30,
+            color: color ?? DEFAULT_COLOR,
+            marginTop: 12,
+            textAlign: "center",
+          }}
+        >
+          Confirm your passcode
+        </Text>
+      )}
     </View>
   );
 };

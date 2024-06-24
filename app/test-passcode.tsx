@@ -32,14 +32,24 @@ export default function TestPasscodeScreen() {
           onEnd={(code) => {
             console.log("Passcode: ", code);
             // Test passcode with code check
-            if (code === FAKE_USER_CODE) {
+            /* if (code === FAKE_USER_CODE) {
               router?.push("/test-passcode-end");
-            }
+            }*/
+            // Test passcode with confirmation, returns the created passcode
+            router?.push({
+              pathname: "/test-passcode-end",
+              params: {
+                passcode: code,
+              },
+            });
           }}
           // Will display a validation button to allow submitting the passcode
           withValidation
           // Will handle errors if passcode doesn't match the expected one
           shouldMatch={FAKE_USER_CODE}
+          /*Will ask for a confirmation of the passcode. Needs "withValidation" props to be true
+          and "shouldMatch" won't be triggered*/
+          withConfirmation
           // // Text and keyboard color
           // color={"#074264"}
           // // Custom code digits slots
