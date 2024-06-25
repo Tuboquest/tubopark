@@ -4,7 +4,7 @@ import LogoArea from "@/components/LogoArea";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 export default function StartScreen() {
   return (
@@ -35,7 +35,13 @@ export default function StartScreen() {
           title={"Next"}
           onPress={() => router?.push("/(onBoarding)/pageThree")}
         />
-        <ClassicButton title={"Skip"} onPress={() => router?.push("/(tabs)")} />
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => router?.push("/(tabs)")}
+          style={styles.button}
+        >
+            <Text style={styles.buttonText}>Skip</Text>
+        </TouchableOpacity>
       </View>
     </GradientBackground>
   );
@@ -90,5 +96,17 @@ const styles = StyleSheet.create({
   },
   activeIndicatorDot: {
     backgroundColor: "#4285f4",
+  },
+  button: {
+    backgroundColor: "#35383F",
+    padding: 15,
+    borderRadius: 50,
+    width: 326,
+    height: 58,
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 16,
   },
 });

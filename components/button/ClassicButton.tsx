@@ -26,7 +26,6 @@ export const ClassicButton: FC<ClassicButtonProps> = (props) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#1181ff",
     padding: 15,
     borderRadius: 50,
     width: 326,
