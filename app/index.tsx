@@ -11,8 +11,10 @@ export default function StartScreen() {
     <GradientBackground>
       <View style={styles.container}>
         <LogoArea />
-        <Text style={styles.title}>Choose your connection</Text>
 
+        <View style={styles.titleContainer}>
+        <Text style={styles.title}>Choose your connection</Text>
+        </View>
         <View style={styles.buttonContainer}>
           <ClassicButton
             title={"Create account"}
@@ -22,10 +24,10 @@ export default function StartScreen() {
             title={"Login"}
             onPress={() => router?.push("/(auth)/login")}
           />
-          <ClassicButton
+          {/* <ClassicButton
             title={"OnBoarding"}
             onPress={() => router?.push("/(onBoarding)/pageOne")}
-          />
+          /> */}
         </View>
       </View>
     </GradientBackground>
@@ -39,7 +41,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 30,
-    gap: 30,
+    gap: 35,
+  },
+  titleContainer:{
+    width : "100%",
+    marginTop : 75,
   },
   header: {
     flexDirection: "row",
@@ -75,10 +81,11 @@ const styles = StyleSheet.create({
     color: "#1181ff",
   },
   title: {
-    fontSize: 24,
+    fontSize: 36,
     fontWeight: "bold",
     color: "#fff",
     marginTop: 50,
+    paddingHorizontal : 24,
   },
   button: {
     backgroundColor: "#1181ff",

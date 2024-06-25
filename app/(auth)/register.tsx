@@ -1,14 +1,14 @@
+import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
 import LogoArea from "@/components/LogoArea";
-import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-
 import {
-  StyleSheet,
-  Text,
   View,
-  TouchableOpacity,
+  Text,
   TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
 } from "react-native";
 
 export default function RegisterScreen() {
@@ -16,56 +16,63 @@ export default function RegisterScreen() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleEmailChange = (text: string) => setEmail(text);
-  const handlePasswordChange = (text: string) => setPassword(text);
-  const handleRememberMeChange = () => setRememberMe(!rememberMe);
-
-  const handleSignUp = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Remember me:", rememberMe);
+  const handleLogin = () => {
+    // Implement your login logic here
+    console.log("Login attempt:", { email, password });
   };
+
   return (
     <GradientBackground>
       <View style={styles.container}>
         <LogoArea />
         <Text style={styles.title}>Create your Account</Text>
+
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             placeholder="Email"
             value={email}
-            onChangeText={handleEmailChange}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
           <TextInput
             style={styles.input}
             placeholder="Password"
-            secureTextEntry={true}
             value={password}
-            onChangeText={handlePasswordChange}
+            onChangeText={setPassword}
+            secureTextEntry={true}
           />
         </View>
-        <View style={styles.rememberMeContainer}>
-          <TouchableOpacity
-            style={styles.checkbox}
-            onPress={handleRememberMeChange}
-          >
-            <Text style={styles.rememberMeText}>{rememberMe ? "✓" : ""}</Text>
+
+        <View style={styles.rememberContainer}>
+          <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
+            <View style={styles.rememberCheckbox}>
+              {rememberMe && <View style={styles.checkedIcon} />}
+            </View>
           </TouchableOpacity>
-          <Text style={styles.rememberMeText}>Remember me</Text>
+          <Text style={styles.whiteText}>Remember me</Text>
         </View>
-        <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-          <Text style={styles.signUpButtonText}>Sign up</Text>
-        </TouchableOpacity>
-        <View style={styles.signInContainer}>
-          <Text style={styles.signInText}>Already have an account?</Text>
+
+        <ClassicButton
+          title="Sign In"
+          onPress={() => console.log("Sign button pressed")}
+        />
+
+        <View style={styles.textContainer}>
           <TouchableOpacity
-            onPress={() => {
-              /* Handle sign-in action */
-            }}
+            onPress={() => console.log("")}
+            activeOpacity={0.8}
           >
-            <Text style={styles.signInButton}>Sign in</Text>
+            <Text style={styles.forgotPassword}></Text>
           </TouchableOpacity>
+
+          <View style={styles.signUpContainer}>
+            <Text style={styles.whiteText}>Don't have an account?</Text>
+            <TouchableOpacity onPress={() => console.log("Sign up pressed")}>
+              <Text style={styles.signUp}>Sign up</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </GradientBackground>
@@ -74,69 +81,87 @@ export default function RegisterScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
   },
-  logoContainer: {
-    marginBottom: 30,
+  textContainer: {
+    marginTop: 24,
+    gap: 35,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  signUpContainer: {
+    flexDirection: "row",
+    gap: 5,
   },
   logo: {
-    fontSize: 60,
-    fontWeight: "bold",
-    color: "#fff",
+    width: 100,
+    height: 100,
+    marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 36,
     fontWeight: "bold",
+    marginVertical: 30,
     color: "#fff",
-    marginBottom: 20,
   },
   inputContainer: {
-    width: "80%",
-    marginBottom: 20,
+    width: "100%",
+    marginBottom: 24,
+    gap : 24,
+    alignItems: "center",
   },
   input: {
-    height: 40,
-    borderColor: "#fff",
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 10,
-    color: "#fff",
+    height: 60,
+    width: 324,
+    backgroundColor: "#FFF",
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    color: "#000",
   },
-  rememberMeContainer: {
+  rememberContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 20,
   },
-  checkbox: {
+  rememberCheckbox: {
+    width: 20,
+    height: 20,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 10,
   },
-  rememberMeText: {
-    color: "#fff",
-  },
-  signUpButton: {
-    backgroundColor: "#0056b3",
-    padding: 10,
+  checkedIcon: {
+    width: 10,
+    height: 10,
     borderRadius: 5,
-    width: "80%",
+    backgroundColor: "#fff",
+  },
+  button: {
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 10,
+    width: "100%",
     marginBottom: 20,
   },
-  signUpButtonText: {
-    color: "#fff",
-    fontSize: 18,
+  buttonText: {
+    color: "#000",
     textAlign: "center",
+    fontWeight: "bold",
   },
-  signInContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+  forgotPassword: {
+    color: "#1E95D9",
+    marginBottom: 10,
   },
-  signInText: {
+  whiteText: {
     color: "#fff",
   },
-  signInButton: {
-    color: "#fff",
-    marginLeft: 5,
-    textDecorationLine: "underline",
+  signUp: {
+    color: "#1E95D9",
   },
 });
