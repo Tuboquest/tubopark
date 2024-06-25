@@ -19,6 +19,7 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    Urbanist: require("@/assets/fonts/Urbanist-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -35,7 +36,31 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <SafeAreaProvider>
         <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
+          {/* <Stack.Screen
+            name="(auth)/register"
+            options={{ headerShown: false }}
+          /> */}
+          {/* <Stack.Screen name="(auth)/forgot-password" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/reset-password" options={{ headerShown: false }} /> */}
+          <Stack.Screen
+            name="(onBoarding)/pageOne"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="(onBoarding)/pageTwo"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="(onBoarding)/pageThree"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="(onBoarding)/pageFour"
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name="+not-found" />
         </Stack>
       </SafeAreaProvider>
