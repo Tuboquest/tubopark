@@ -6,7 +6,7 @@ import { router } from "expo-router";
 
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-export default function StartScreen() {
+export default function onBoardingScreenTwo() {
   return (
     <GradientBackground>
       <View style={styles.logoContainer}>
@@ -40,7 +40,7 @@ export default function StartScreen() {
           onPress={() => router?.push("/(tabs)")}
           style={styles.button}
         >
-            <Text style={styles.buttonText}>Skip</Text>
+          <Text style={styles.buttonText}>Skip</Text>
         </TouchableOpacity>
       </View>
     </GradientBackground>

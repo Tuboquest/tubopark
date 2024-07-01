@@ -1,3 +1,4 @@
+import { useHaptic } from "@/hooks/useHaptics";
 import { LinearGradient } from "expo-linear-gradient";
 import { FC } from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
@@ -10,8 +11,16 @@ type ClassicButtonProps = {
 export const ClassicButton: FC<ClassicButtonProps> = (props) => {
   const { title, onPress } = props;
 
+  const hapticsFeedback = useHaptic("light");
+
   return (
-    <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={() => {
+        hapticsFeedback?.();
+        onPress();
+      }}
+    >
       <LinearGradient
         colors={["#074264", "#83A5C7"]}
         start={{ x: 0, y: 0 }}

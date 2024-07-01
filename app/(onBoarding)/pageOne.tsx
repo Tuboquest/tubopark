@@ -8,7 +8,7 @@ import {
   ImageBackground,
 } from "react-native";
 
-export default function StartScreen() {
+export default function onBoardingScreenOne() {
   return (
     <TouchableOpacity
       activeOpacity={0.5}

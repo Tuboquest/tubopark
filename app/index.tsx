@@ -13,7 +13,7 @@ export default function StartScreen() {
         <LogoArea />
 
         <View style={styles.titleContainer}>
-        <Text style={styles.title}>Choose your connection</Text>
+          <Text style={styles.title}>Choose your connection</Text>
         </View>
         <View style={styles.buttonContainer}>
           <ClassicButton
@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
     marginTop: 30,
     gap: 35,
   },
-  titleContainer:{
-    width : "100%",
-    marginTop : 75,
+  titleContainer: {
+    width: "100%",
+    marginTop: 75,
   },
   header: {
     flexDirection: "row",
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     marginTop: 50,
-    paddingHorizontal : 24,
+    paddingHorizontal: 24,
   },
   button: {
     backgroundColor: "#1181ff",
