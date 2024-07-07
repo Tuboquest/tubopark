@@ -1,8 +1,10 @@
+import { Auth } from "@/api/auth";
 import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
 import LogoArea from "@/components/LogoArea";
+import { useAuth } from "@/hooks/useAuth";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -12,15 +14,59 @@ import {
 } from "react-native";
 
 export default function PinScren() {
-  const [pinSaved, setPinSaved] = useState<string>("");
+  const [pinTyped, setPinTyped] = useState<string[]>(["", "", "", ""]);
+  const [pinSaved, setPinSaved] = useState<string[]>(["", "", "", ""]);
   const [isPinSaved, setIsPinSaved] = useState<boolean>(false);
 
-  const handleSavePin = () => {
+  const firstRef = useRef<any>(null);
+  const secondRef = useRef<any>(null);
+  const thirdRef = useRef<any>(null);
+  const fourthRef = useRef<any>(null);
+
+  const { token } = useAuth();
+
+  const handleSavePin = async () => {
+    if (pinTyped.includes("")) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const passCode = pinTyped[0] + pinTyped[1] + pinTyped[2] + pinTyped[3];
+    console.log("Save pin attempt:", { passCode, token });
+
+    // await Auth.setPasscord(token,
+
     setIsPinSaved(true);
+    setPinSaved(pinTyped);
+    setPinTyped(["", "", "", ""]);
   };
 
   const handleConfirmPin = () => {
-    router.push("/(onBoarding)/pageOne");
+    if (pinSaved !== pinTyped) {
+      alert("Pin code does not match");
+      return;
+    }
+
+    // router.push("/(onBoarding)/pageOne");
+  };
+
+  const onChangeHandler = (
+    index: number,
+    value: string,
+    setFunction: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    const newPin = [...pinTyped];
+    newPin[index] = value;
+    setFunction(newPin);
+    if (index === 0) {
+      secondRef.current.focus();
+    }
+    if (index === 1) {
+      thirdRef.current.focus();
+    }
+    if (index === 2) {
+      fourthRef.current.focus();
+    }
   };
 
   return (
@@ -37,16 +83,46 @@ export default function PinScren() {
         <View style={styles.numberPad}>
           <View style={styles.numberPad}>
             <View style={styles.numberButton}>
-              <TextInput style={styles.numberText} maxLength={1}></TextInput>
+              <TextInput
+                maxLength={1}
+                style={styles.numberText}
+                ref={firstRef}
+                autoFocus={true}
+                showSoftInputOnFocus={true}
+                keyboardType="numeric"
+                value={pinTyped[0]}
+                onChangeText={(value) => onChangeHandler(0, value, setPinTyped)}
+              ></TextInput>
             </View>
             <View style={styles.numberButton}>
-              <TextInput style={styles.numberText} maxLength={1}></TextInput>
+              <TextInput
+                maxLength={1}
+                style={styles.numberText}
+                ref={secondRef}
+                keyboardType="numeric"
+                value={pinTyped[1]}
+                onChangeText={(value) => onChangeHandler(1, value, setPinTyped)}
+              ></TextInput>
             </View>
             <View style={styles.numberButton}>
-              <TextInput style={styles.numberText} maxLength={1}></TextInput>
+              <TextInput
+                maxLength={1}
+                style={styles.numberText}
+                ref={thirdRef}
+                keyboardType="numeric"
+                value={pinTyped[2]}
+                onChangeText={(value) => onChangeHandler(2, value, setPinTyped)}
+              ></TextInput>
             </View>
             <View style={styles.numberButton}>
-              <TextInput style={styles.numberText} maxLength={1}></TextInput>
+              <TextInput
+                maxLength={1}
+                style={styles.numberText}
+                ref={fourthRef}
+                keyboardType="numeric"
+                value={pinTyped[3]}
+                onChangeText={(value) => onChangeHandler(3, value, setPinTyped)}
+              ></TextInput>
             </View>
           </View>
         </View>

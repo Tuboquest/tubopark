@@ -10,7 +10,6 @@ export enum Method {
 export class Fetch {
   private static baseURL: string = process.env.EXPO_PUBLIC_BASE_URL ?? "";
   private static token: string = "";
-  private static key: string = process.env.EXPO_PUBLIC_API_KEY ?? "";
 
   static setToken(token: string) {
     this.token = token;
@@ -23,23 +22,21 @@ export class Fetch {
   ): string {
     let baseUrl = this.baseURL
       .replace("[]", endpoint)
-      .replace("apiToken", this.token)
-      .replace("apiKey", this.key);
-
+    //   .replace("apiToken", this.token)
     if (endpoint === "/batch") {
       return `${baseUrl}&urls=${body?.urls}`;
     }
 
-    if (body && body.idMembers) {
-      baseUrl += `&idMembers=${body.idMembers}`;
-      delete body.idMembers;
-    }
+    // if (body && body.idMembers) {
+    //   baseUrl += `&idMembers=${body.idMembers}`;
+    //   delete body.idMembers;
+    // }
 
-    const hasQuery = body && Object.keys(body).length > 0;
-
-    if (hasQuery) {
-      baseUrl += `&${new URLSearchParams(body || {}).toString()}`;
-    }
+    // const hasQuery = body && Object.keys(body).length > 0;
+    
+    // if (hasQuery) {
+    //   baseUrl += `&${new URLSearchParams(body || {}).toString()}`;
+    // }
 
     console.log(`Fetching: ${baseUrl}`);
 
@@ -58,6 +55,7 @@ export class Fetch {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      body : JSON.stringify(body),
     });
 
     try {

@@ -1,6 +1,8 @@
+import { Auth } from "@/api/auth";
 import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
 import LogoArea from "@/components/LogoArea";
+import { useAuth } from "@/hooks/useAuth";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -18,26 +20,39 @@ export default function RegisterScreen() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleRegister = () => {
-    // Implement your login logic here
-    console.log("Login attempt:", { email, password });
-
+  const handleRegister = async () => {
     if (password !== confirmPassword) {
       alert("Password and Confirm Password do not match");
+      console.error("Register attempt:", { email, password });
+
       return;
     }
 
     if (email === "") {
-      alert("Email cannot be empty");
+      +alert("Email cannot be empty");
+      console.error("Register attempt:", { email, password });
+
       return;
     }
 
     if (password === "") {
       alert("Password cannot be empty");
+      console.error("Register attempt:", { email, password });
+
       return;
     }
 
-    // verify if password and confirmpassword are tbhe same
+    const user = await Auth.register(email, password, confirmPassword);
+
+    const { auth } = useAuth();
+
+    if (!user.token) {
+      alert(user.email + user.password);
+      return;
+    }
+
+    auth(user.token, user);
+
     router?.push("/(auth)/pin");
   };
 

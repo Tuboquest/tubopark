@@ -1,6 +1,9 @@
+import { Auth } from "@/api/auth";
 import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
 import LogoArea from "@/components/LogoArea";
+import { useAuth } from "@/hooks/useAuth";
+import { User } from "@/types/User";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -13,13 +16,23 @@ import {
 } from "react-native";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  const handleLogin = () => {
+  const { token, auth } = useAuth();
+
+  const handleLogin = async () => {
     // Implement your login logic here
-    console.log("Login attempt:", { email, password });
+    const user = await Auth.login(email, password);
+
+    auth(user.token, user);
+
+    if (!user.token) {
+      alert(user.email + user.password);
+      return;
+    }
+
     router?.push("/(tabs)");
   };
 
