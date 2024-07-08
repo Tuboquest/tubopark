@@ -38,6 +38,10 @@ export default function sendMailScreen() {
     // }
     // router?.push("/(tabs)");
     console.log("change page");
+    if (pinTyped.includes("")) {
+      alert("Please enter the code");
+      return;
+    }
 
     router?.push("/(resetPassword)/createNewPassword");
   };

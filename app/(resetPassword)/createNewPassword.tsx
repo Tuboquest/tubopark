@@ -26,13 +26,13 @@ export default function createNewPasswordScreen() {
   const handleConfirmPassword = async () => {
     if (password !== confirmPassword) {
       alert("Password and Confirm Password do not match");
-      console.error("Register attempt:", { email, password });
+      console.log("Register attempt:", { email, password });
 
       return;
     }
     if (password === "") {
       alert("Password cannot be empty");
-      console.error("Register attempt:", { email, password });
+      console.log("Register attempt:", { email, password });
 
       return;
     }

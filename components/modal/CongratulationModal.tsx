@@ -21,11 +21,12 @@ const CongratulationModal: React.FC<CongratulationModalProps> = (props) => {
     <Modal visible={visible} transparent>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          {/* <Image
-            source={require("path/to/congratulation-image.png")}
+          <Image
+            source={require("@/assets/images/checkBox.png")}
             style={styles.image}
-          /> */}
+          />
           <Text style={styles.message}>Congratulations!</Text>
+          <Text style={styles.description}>Your account is ready to use</Text>
           <ClassicButton title={"Go to Homepage"} onPress={onClose} />
         </View>
       </View>
@@ -41,20 +42,24 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
     alignItems: "center",
+    backgroundColor: "#373C49",
   },
   image: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
+    marginVertical: 20,
   },
   message: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
+    color: "#30A8CE",
+  },
+  description: {
+    fontSize: 16,
+    marginBottom: 20,
+    color: "white",
   },
   button: {
     backgroundColor: "blue",
