@@ -15,10 +15,10 @@ import {
 } from "react-native";
 
 export default function RegisterScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
 
   const handleRegister = async () => {
     if (password !== confirmPassword) {
@@ -42,16 +42,16 @@ export default function RegisterScreen() {
       return;
     }
 
-    const user = await Auth.register(email, password, confirmPassword);
+    // const user = await Auth.register(email, password, confirmPassword);
 
-    const { auth } = useAuth();
+    // const { auth } = useAuth();
 
-    if (!user.token) {
-      alert(user.email + user.password);
-      return;
-    }
+    // if (!user.token) {
+    //   alert(user.email + user.password);
+    //   return;
+    // }
 
-    auth(user.token, user);
+    // auth(user.token, user);
 
     router?.push("/(auth)/pin");
   };

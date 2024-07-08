@@ -1,6 +1,7 @@
 import { Auth } from "@/api/auth";
 import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
+import { PinInput } from "@/components/input/PinInput";
 import LogoArea from "@/components/LogoArea";
 import { useAuth } from "@/hooks/useAuth";
 import { router } from "expo-router";
@@ -42,12 +43,13 @@ export default function PinScren() {
   };
 
   const handleConfirmPin = () => {
-    if (pinSaved !== pinTyped) {
+    if (JSON.stringify(pinSaved) != JSON.stringify(pinTyped)) {
+      console.log("pinSaved", pinSaved, "pinTyped", pinTyped);
       alert("Pin code does not match");
       return;
     }
 
-    // router.push("/(onBoarding)/pageOne");
+    router.push("/(onBoarding)/pageOne");
   };
 
   const onChangeHandler = (
@@ -80,7 +82,7 @@ export default function PinScren() {
         <Text style={styles.description}>
           The pin code will be used to connect to the application
         </Text>
-        <View style={styles.numberPad}>
+        {/* <View style={styles.numberPad}>
           <View style={styles.numberPad}>
             <View style={styles.numberButton}>
               <TextInput
@@ -125,7 +127,12 @@ export default function PinScren() {
               ></TextInput>
             </View>
           </View>
-        </View>
+        </View> */}
+        <PinInput
+          pinTyped={pinTyped}
+          // onChangeHandler={onChangeHandler}
+          setPinTyped={setPinTyped}
+        />
         {isPinSaved ? (
           <ClassicButton title={"Create"} onPress={handleConfirmPin} />
         ) : (

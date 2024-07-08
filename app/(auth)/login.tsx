@@ -73,7 +73,7 @@ export default function LoginScreen() {
 
         <View style={styles.textContainer}>
           <TouchableOpacity
-            onPress={() => console.log("Forgot password pressed")}
+            onPress={() => router?.push("(resetPassword)/sendMail")}
             activeOpacity={0.8}
           >
             <Text style={styles.forgotPassword}>Forgot the password?</Text>
