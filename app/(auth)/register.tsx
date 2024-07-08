@@ -1,6 +1,9 @@
+import { Auth } from "@/api/auth";
 import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
 import LogoArea from "@/components/LogoArea";
+import { useAuth } from "@/hooks/useAuth";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   View,
@@ -12,13 +15,45 @@ import {
 } from "react-native";
 
 export default function RegisterScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  const handleLogin = () => {
-    // Implement your login logic here
-    console.log("Login attempt:", { email, password });
+  const handleRegister = async () => {
+    if (password !== confirmPassword) {
+      alert("Password and Confirm Password do not match");
+      console.error("Register attempt:", { email, password });
+
+      return;
+    }
+
+    if (email === "") {
+      +alert("Email cannot be empty");
+      console.error("Register attempt:", { email, password });
+
+      return;
+    }
+
+    if (password === "") {
+      alert("Password cannot be empty");
+      console.error("Register attempt:", { email, password });
+
+      return;
+    }
+
+    // const user = await Auth.register(email, password, confirmPassword);
+
+    // const { auth } = useAuth();
+
+    // if (!user.token) {
+    //   alert(user.email + user.password);
+    //   return;
+    // }
+
+    // auth(user.token, user);
+
+    router?.push("/(auth)/pin");
   };
 
   return (
@@ -43,6 +78,13 @@ export default function RegisterScreen() {
             onChangeText={setPassword}
             secureTextEntry={true}
           />
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry={true}
+          />
         </View>
 
         <View style={styles.rememberContainer}>
@@ -54,23 +96,13 @@ export default function RegisterScreen() {
           <Text style={styles.whiteText}>Remember me</Text>
         </View>
 
-        <ClassicButton
-          title="Sign In"
-          onPress={() => console.log("Sign button pressed")}
-        />
+        <ClassicButton title="Sign Up" onPress={handleRegister} />
 
         <View style={styles.textContainer}>
-          <TouchableOpacity
-            onPress={() => console.log("")}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.forgotPassword}></Text>
-          </TouchableOpacity>
-
           <View style={styles.signUpContainer}>
-            <Text style={styles.whiteText}>Don't have an account?</Text>
-            <TouchableOpacity onPress={() => console.log("Sign up pressed")}>
-              <Text style={styles.signUp}>Sign up</Text>
+            <Text style={styles.whiteText}>Already have an account?</Text>
+            <TouchableOpacity onPress={() => router?.push("(auth)/login")}>
+              <Text style={styles.signUp}>Sign in</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -87,7 +119,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginTop: 24,
-    gap: 35,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -109,7 +140,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: "100%",
     marginBottom: 24,
-    gap : 24,
+    gap: 24,
     alignItems: "center",
   },
   input: {
@@ -120,6 +151,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     color: "#000",
+    fontFamily: "Urbanist",
   },
   rememberContainer: {
     flexDirection: "row",

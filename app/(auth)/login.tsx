@@ -1,6 +1,10 @@
+import { Auth } from "@/api/auth";
 import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
 import LogoArea from "@/components/LogoArea";
+import { useAuth } from "@/hooks/useAuth";
+import { User } from "@/types/User";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   View,
@@ -11,14 +15,25 @@ import {
   Image,
 } from "react-native";
 
-export default function LoginScreen (){
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+export default function LoginScreen() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  const handleLogin = () => {
+  const { token, auth } = useAuth();
+
+  const handleLogin = async () => {
     // Implement your login logic here
-    console.log("Login attempt:", { email, password });
+    const user = await Auth.login(email, password);
+
+    auth(user.token, user);
+
+    if (!user.token) {
+      alert(user.email + user.password);
+      return;
+    }
+
+    router?.push("/(tabs)");
   };
 
   return (
@@ -54,14 +69,11 @@ export default function LoginScreen (){
           <Text style={styles.whiteText}>Remember me</Text>
         </View>
 
-        <ClassicButton
-          title="Sign In"
-          onPress={() => console.log("Sign button pressed")}
-        />
+        <ClassicButton title="Sign In" onPress={handleLogin} />
 
         <View style={styles.textContainer}>
           <TouchableOpacity
-            onPress={() => console.log("Forgot password pressed")}
+            onPress={() => router?.push("(resetPassword)/sendMail")}
             activeOpacity={0.8}
           >
             <Text style={styles.forgotPassword}>Forgot the password?</Text>
@@ -69,7 +81,7 @@ export default function LoginScreen (){
 
           <View style={styles.signUpContainer}>
             <Text style={styles.whiteText}>Don't have an account?</Text>
-            <TouchableOpacity onPress={() => console.log("Sign up pressed")}>
+            <TouchableOpacity onPress={() => router?.push("(auth)/register")}>
               <Text style={styles.signUp}>Sign up</Text>
             </TouchableOpacity>
           </View>
@@ -77,7 +89,7 @@ export default function LoginScreen (){
       </View>
     </GradientBackground>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -91,7 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  signUpContainer : {
+  signUpContainer: {
     flexDirection: "row",
     gap: 5,
   },
@@ -109,7 +121,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: "100%",
     marginBottom: 24,
-    gap : 24,
+    gap: 24,
     alignItems: "center",
   },
   input: {
