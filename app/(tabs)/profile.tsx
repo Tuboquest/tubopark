@@ -2,30 +2,85 @@ import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
 import LogoArea from "@/components/LogoArea";
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Alert,
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
 export default function Profile() {
+  const [profileImage, setProfileImage] = useState<any>(
+    require("../../assets/images/profile.png")
+  );
+
+  const chooseImage = async () => {
+    // Demande des permissions pour accéder à la galerie
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission insuffisante",
+        "Nous avons besoin de la permission d'accéder à votre galerie pour choisir une photo."
+      );
+      return;
+    }
+
+    // Ouvrir la galerie pour choisir une image
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setProfileImage({ uri: result.uri });
+    }
+  };
+
   return (
     <GradientBackground>
       <View style={styles.container}>
         <View style={styles.header}></View>
 
         <View style={styles.profileSection}>
-          <Image
-            source={require("../../assets/images/profile.png")}
-            style={styles.profileImage}
-          />
+          <TouchableOpacity onPress={chooseImage}>
+            <Image source={profileImage} style={styles.profileImage} />
+          </TouchableOpacity>
           <Text style={styles.name}>Bob Latimpe</Text>
           <Text style={styles.email}>boblatimpe@yourdomain.com</Text>
         </View>
 
         <View style={styles.menu}>
-          <MenuItem icon="✏️" title="Edit Profile" />
-          <MenuItem icon="💳" title="Payment" />
-          <MenuItem icon="🔔" title="Notifications" />
-          <MenuItem icon="📊" title="Statistics" />
-          <MenuItem icon="📜" title="History and Reports" disabled />
-          <MenuItem icon="🔴" title="Logout" logout />
+          <MenuItem
+            icon={require("../../assets/iconly/curved/Profile.png")}
+            title="Edit Profile"
+          />
+          <MenuItem
+            icon={require("../../assets/iconly/curved/Wallet.png")}
+            title="Payment"
+          />
+          <MenuItem
+            icon={require("../../assets/iconly/curved/Notification.png")}
+            title="Notifications"
+          />
+          <MenuItem
+            icon={require("../../assets/iconly/curved/Activity.png")}
+            title="Statistics"
+          />
+          <MenuItem
+            icon={require("../../assets/iconly/curved/Wallet.png")}
+            title="History and Reports"
+            disabled
+          />
+          <MenuItem
+            icon={require("../../assets/iconly/curved/Logout.png")}
+            title="Logout"
+            logout
+          />
         </View>
       </View>
     </GradientBackground>
@@ -33,7 +88,7 @@ export default function Profile() {
 }
 
 interface MenuItemProps {
-  icon: string;
+  icon: any;
   title: string;
   disabled?: boolean;
   logout?: boolean;
@@ -42,7 +97,10 @@ interface MenuItemProps {
 function MenuItem({ icon, title, disabled, logout }: MenuItemProps) {
   return (
     <TouchableOpacity style={[styles.menuItem, disabled && styles.disabled]}>
-      <Text style={[styles.menuIcon, logout && styles.logoutIcon]}>{icon}</Text>
+      <Image
+        source={icon}
+        style={[styles.menuIcon, { tintColor: logout ? "red" : "white" }]}
+      />
       <Text style={[styles.menuText, logout && styles.logoutText]}>
         {title}
       </Text>
@@ -63,20 +121,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     marginTop: 10,
-  },
-  time: {
-    color: "#fff",
-    fontSize: 16,
-  },
-  signal: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  signalBar: {
-    width: 4,
-    height: 18,
-    backgroundColor: "#fff",
-    marginLeft: 2,
   },
   profileSection: {
     alignItems: "center",
@@ -106,14 +150,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 15,
     paddingHorizontal: 20,
-    backgroundColor: "#1c1c1c",
     borderRadius: 10,
     marginBottom: 10,
   },
   menuIcon: {
-    fontSize: 20,
+    width: 24,
+    height: 24,
     marginRight: 20,
-    color: "#fff",
   },
   menuText: {
     fontSize: 16,
@@ -121,9 +164,6 @@ const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.5,
-  },
-  logoutIcon: {
-    color: "red",
   },
   logoutText: {
     color: "red",
