@@ -34,6 +34,7 @@ export default function RootLayout() {
   }
 
   return (
+
     <UserProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <SafeAreaProvider>
@@ -57,8 +58,6 @@ export default function RootLayout() {
               options={{ headerShown: false }}
             />
             <Stack.Screen name="(auth)/pin" options={{ headerShown: false }} />
-            {/* <Stack.Screen name="(auth)/forgot-password" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)/reset-password" options={{ headerShown: false }} /> */}
             <Stack.Screen
               name="(onBoarding)/pageOne"
               options={{ headerShown: false }}

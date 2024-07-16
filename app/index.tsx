@@ -28,6 +28,10 @@ export default function StartScreen() {
             title={"OnBoarding"}
             onPress={() => router?.push("/(onBoarding)/pageOne")}
           /> */}
+          <ClassicButton
+            title={"Profile"}
+            onPress={() => router?.push("/(tabs)/profile")}
+          />
         </View>
       </View>
     </GradientBackground>
