@@ -1,6 +1,3 @@
-import { ClassicButton } from "@/components/button/ClassicButton";
-import { GradientBackground } from "@/components/GradientBackground";
-import LogoArea from "@/components/LogoArea";
 import React, { useState } from "react";
 import {
   View,
@@ -11,14 +8,16 @@ import {
   Alert,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { GradientBackground } from "@/components/GradientBackground";
+import { useRouter } from "expo-router";
 
 export default function Profile() {
   const [profileImage, setProfileImage] = useState<any>(
     require("../../assets/images/profile.png")
   );
+  const router = useRouter();
 
   const chooseImage = async () => {
-    // Demande des permissions pour accéder à la galerie
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
       Alert.alert(
@@ -28,7 +27,6 @@ export default function Profile() {
       return;
     }
 
-    // Ouvrir la galerie pour choisir une image
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -36,8 +34,11 @@ export default function Profile() {
       quality: 1,
     });
 
-    if (!result.canceled) {
-      setProfileImage({ uri: result.uri });
+    console.log("ImagePicker result:", result);
+
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      setProfileImage({ uri: result.assets[0].uri });
+      console.log("New profile image URI:", result.assets[0].uri);
     }
   };
 
@@ -58,6 +59,7 @@ export default function Profile() {
           <MenuItem
             icon={require("../../assets/iconly/curved/Profile.png")}
             title="Edit Profile"
+            onPress={() => router.push("/editProfile")}
           />
           <MenuItem
             icon={require("../../assets/iconly/curved/Wallet.png")}
@@ -66,6 +68,7 @@ export default function Profile() {
           <MenuItem
             icon={require("../../assets/iconly/curved/Notification.png")}
             title="Notifications"
+            onPress={() => router.push("/notifications")}
           />
           <MenuItem
             icon={require("../../assets/iconly/curved/Activity.png")}
@@ -90,13 +93,18 @@ export default function Profile() {
 interface MenuItemProps {
   icon: any;
   title: string;
+  onPress?: () => void;
   disabled?: boolean;
   logout?: boolean;
 }
 
-function MenuItem({ icon, title, disabled, logout }: MenuItemProps) {
+function MenuItem({ icon, title, onPress, disabled, logout }: MenuItemProps) {
   return (
-    <TouchableOpacity style={[styles.menuItem, disabled && styles.disabled]}>
+    <TouchableOpacity
+      style={[styles.menuItem, disabled && styles.disabled]}
+      onPress={onPress}
+      disabled={disabled}
+    >
       <Image
         source={icon}
         style={[styles.menuIcon, { tintColor: logout ? "red" : "white" }]}
