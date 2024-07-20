@@ -85,6 +85,10 @@ export default function RootLayout() {
               name="(resetPassword)/createNewPassword"
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+              name="(others)/statistic"
+              options={{ headerShown: false }}
+            />
             <Stack.Screen name="+not-found" />
           </Stack>
         </SafeAreaProvider>
