@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { GradientBackground } from "@/components/GradientBackground";
+import { LinearGradient } from "expo-linear-gradient";
 
 const notificationsData = [
   { id: "1", title: "Payment Successful!", date: "Today", status: "success" },
@@ -16,7 +17,6 @@ const notificationsData = [
     id: "3",
     title: "2 step verification successful",
     date: "Yesterday",
-    status: "success",
   },
   { id: "4", title: "E-Wallet Connected", date: "Yesterday", status: "info" },
 ];
@@ -24,9 +24,27 @@ const notificationsData = [
 export default function Notifications() {
   const router = useRouter();
 
+  const getGradientColors = (status) => {
+    switch (status) {
+      case "success":
+        return ["#39E180", "#1AB65C"];
+      case "error":
+        return ["#FF9094", "#FF5A5F"];
+      case "info":
+        return ["#00BCD3", "#00BCD3"];
+      default:
+        return ["#83A5C7", "#074264"];
+    }
+  };
+
   const renderItem = ({ item }) => (
     <View style={styles.notificationItem}>
-      <View style={styles.ellipse}></View>
+      <LinearGradient
+        colors={getGradientColors(item.status)}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.ellipse}
+      />
       <View style={styles.textContainer}>
         <Text style={styles.notificationTitle}>{item.title}</Text>
         <Text style={styles.notificationDate}>{item.date}</Text>
@@ -90,7 +108,6 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: "#00BCD3",
     marginRight: 15,
   },
   textContainer: {
