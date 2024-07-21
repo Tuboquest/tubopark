@@ -1,26 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { GradientBackground } from "@/components/GradientBackground";
 import { LinearGradient } from "expo-linear-gradient";
-
-const notificationsData = [
-  { id: "1", title: "Payment Successful!", date: "Today", status: "success" },
-  {
-    id: "2",
-    title: "Parking Booking Canceled",
-    date: "Today",
-    status: "error",
-  },
-  {
-    id: "3",
-    title: "2 step verification successful",
-    date: "Yesterday",
-    status: "success",
-  },
-  { id: "4", title: "E-Wallet Connected", date: "Yesterday", status: "info" },
-];
+import { Notifications } from "@/api/notifications";
 
 const iconSources: { [key: string]: any } = {
   success: require("@/assets/iconly/bold/Success.png"),
@@ -29,8 +13,18 @@ const iconSources: { [key: string]: any } = {
   default: require("@/assets/iconly/bold/Fail.png"),
 };
 
-export default function Notifications() {
+export default function NotificationsScreen() {
+  const [notificationsData, setNotificationsData] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const data = await Notifications.getNotifications();
+      setNotificationsData(data);
+    };
+
+    fetchNotifications();
+  }, []);
 
   const getGradientColors = (status) => {
     switch (status) {
@@ -81,7 +75,7 @@ export default function Notifications() {
         <FlatList
           data={notificationsData}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.list}
         />
       </View>
