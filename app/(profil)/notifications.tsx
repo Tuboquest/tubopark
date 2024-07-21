@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { GradientBackground } from "@/components/GradientBackground";
@@ -17,9 +17,17 @@ const notificationsData = [
     id: "3",
     title: "2 step verification successful",
     date: "Yesterday",
+    status: "success",
   },
   { id: "4", title: "E-Wallet Connected", date: "Yesterday", status: "info" },
 ];
+
+const iconSources: { [key: string]: any } = {
+  success: require("@/assets/iconly/bold/Success.png"),
+  error: require("@/assets/iconly/bold/Fail.png"),
+  info: require("@/assets/iconly/bold/Fail.png"),
+  default: require("@/assets/iconly/bold/Fail.png"),
+};
 
 export default function Notifications() {
   const router = useRouter();
@@ -37,6 +45,10 @@ export default function Notifications() {
     }
   };
 
+  const getIconSource = (status) => {
+    return iconSources[status] || iconSources.default;
+  };
+
   const renderItem = ({ item }) => (
     <View style={styles.notificationItem}>
       <LinearGradient
@@ -44,7 +56,9 @@ export default function Notifications() {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.ellipse}
-      />
+      >
+        <Image source={getIconSource(item.status)} style={styles.icon} />
+      </LinearGradient>
       <View style={styles.textContainer}>
         <Text style={styles.notificationTitle}>{item.title}</Text>
         <Text style={styles.notificationDate}>{item.date}</Text>
@@ -109,6 +123,12 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     marginRight: 15,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
   textContainer: {
     flex: 1,
