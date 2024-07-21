@@ -17,9 +17,9 @@ export default function ProfileScreen() {
     require("@/assets/images/profile.png")
   );
   const [profile, setProfile] = useState<any>({
-    firstName: "",
-    lastName: "",
-    email: "",
+    firstName: "Bob",
+    lastName: "Latimpe",
+    email: "boblatime@mail.com",
     country: "",
     imageUri: "",
   });
