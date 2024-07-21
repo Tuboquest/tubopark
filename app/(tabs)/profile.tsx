@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,12 +10,25 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { GradientBackground } from "@/components/GradientBackground";
 import { useRouter } from "expo-router";
+import { Profile } from "@/api/profile";
 
-export default function Profile() {
+export default function ProfileScreen() {
   const [profileImage, setProfileImage] = useState<any>(
-    require("../../assets/images/profile.png")
+    require("@/assets/images/profile.png")
   );
+  const [profile, setProfile] = useState<any>({});
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const profileData = await Profile.getProfile();
+      setProfile(profileData);
+      if (profileData.imageUri) {
+        setProfileImage({ uri: profileData.imageUri });
+      }
+    };
+    fetchProfile();
+  }, []);
 
   const chooseImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -34,11 +47,12 @@ export default function Profile() {
       quality: 1,
     });
 
-    console.log("ImagePicker result:", result);
-
     if (!result.canceled && result.assets && result.assets.length > 0) {
-      setProfileImage({ uri: result.assets[0].uri });
-      console.log("New profile image URI:", result.assets[0].uri);
+      const selectedImage = result.assets[0];
+      setProfileImage({ uri: selectedImage.uri });
+
+      // Update profile with the new image
+      await Profile.updateProfile({ imageUri: selectedImage.uri });
     }
   };
 
@@ -51,36 +65,39 @@ export default function Profile() {
           <TouchableOpacity onPress={chooseImage}>
             <Image source={profileImage} style={styles.profileImage} />
           </TouchableOpacity>
-          <Text style={styles.name}>Bob Latimpe</Text>
-          <Text style={styles.email}>boblatimpe@yourdomain.com</Text>
+          <Text style={styles.name}>
+            {profile.firstName} {profile.lastName}
+          </Text>
+          <Text style={styles.email}>{profile.email}</Text>
+          <View style={styles.separator} />
         </View>
 
         <View style={styles.menu}>
           <MenuItem
-            icon={require("../../assets/iconly/curved/Profile.png")}
+            icon={require("@/assets/iconly/curved/Profile.png")}
             title="Edit Profile"
             onPress={() => router.push("/editProfile")}
           />
           <MenuItem
-            icon={require("../../assets/iconly/curved/Wallet.png")}
+            icon={require("@/assets/iconly/curved/Wallet.png")}
             title="Payment"
           />
           <MenuItem
-            icon={require("../../assets/iconly/curved/Notification.png")}
+            icon={require("@/assets/iconly/curved/Notification.png")}
             title="Notifications"
             onPress={() => router.push("/notifications")}
           />
           <MenuItem
-            icon={require("../../assets/iconly/curved/Activity.png")}
+            icon={require("@/assets/iconly/curved/Activity.png")}
             title="Statistics"
           />
           <MenuItem
-            icon={require("../../assets/iconly/curved/Wallet.png")}
+            icon={require("@/assets/iconly/curved/Chart.png")}
             title="History and Reports"
             disabled
           />
           <MenuItem
-            icon={require("../../assets/iconly/curved/Logout.png")}
+            icon={require("@/assets/iconly/curved/Logout.png")}
             title="Logout"
             logout
           />
@@ -128,15 +145,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    marginTop: 10,
   },
   profileSection: {
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 10,
   },
   profileImage: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     borderRadius: 50,
     marginBottom: 20,
   },
@@ -146,9 +162,15 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   email: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#fff",
-    marginBottom: 40,
+    marginBottom: 10,
+  },
+  separator: {
+    width: 300,
+    height: 1,
+    backgroundColor: "#35383F",
+    marginVertical: 20,
   },
   menu: {
     width: "100%",
@@ -162,12 +184,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   menuIcon: {
-    width: 24,
-    height: 24,
+    width: 28,
+    height: 28,
     marginRight: 20,
   },
   menuText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#fff",
   },
   disabled: {
