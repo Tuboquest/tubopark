@@ -20,12 +20,18 @@ export class Fetch {
     method: Method,
     body?: { [key: string]: string }
   ): string {
-    let baseUrl = this.baseURL
-      .replace("[]", endpoint)
-    //   .replace("apiToken", this.token)
-    if (endpoint === "/batch") {
-      return `${baseUrl}&urls=${body?.urls}`;
+    if (!this.baseURL) {
+      throw new Error(
+        "Base URL is not defined. Please check your environment configuration."
+      );
     }
+
+    let baseUrl = this.baseURL.replace("[]", endpoint);
+
+    // Add any additional query parameters to the URL here if needed
+    // if (endpoint === "/batch") {
+    //   return `${baseUrl}&urls=${body?.urls}`;
+    // }
 
     // if (body && body.idMembers) {
     //   baseUrl += `&idMembers=${body.idMembers}`;
@@ -33,7 +39,6 @@ export class Fetch {
     // }
 
     // const hasQuery = body && Object.keys(body).length > 0;
-    
     // if (hasQuery) {
     //   baseUrl += `&${new URLSearchParams(body || {}).toString()}`;
     // }
@@ -48,14 +53,20 @@ export class Fetch {
     method: Method = Method.GET,
     body?: { [key: string]: string }
   ) {
+    const url = this.getUrl(endpoint, method, body);
+    if (!url) {
+      throw new Error("Cannot load an empty URL");
+    }
 
-    const response = await fetch(this.getUrl(endpoint, method, body), {
+    const response = await fetch(url, {
       method,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        // Add authorization header if token is available
+        ...(this.token ? { Authorization: `Bearer ${this.token}` } : {}),
       },
-      body : JSON.stringify(body),
+      body: method !== Method.GET ? JSON.stringify(body) : undefined,
     });
 
     try {

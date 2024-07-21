@@ -13,20 +13,20 @@ import { useRouter } from "expo-router";
 import { Profile } from "@/api/profile";
 
 export default function EditProfile() {
-  const [firstName, setFirstName] = useState("Bob");
-  const [lastName, setLastName] = useState("Latimpe");
-  const [email, setEmail] = useState("boblatimpe@yourdomain.com");
-  const [country, setCountry] = useState("France");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
 
   const router = useRouter();
 
   useEffect(() => {
     const fetchProfile = async () => {
       const profileData = await Profile.getProfile();
-      setFirstName(profileData.firstName);
-      setLastName(profileData.lastName);
-      setEmail(profileData.email);
-      setCountry(profileData.country);
+      setFirstName(profileData.firstName || "");
+      setLastName(profileData.lastName || "");
+      setEmail(profileData.email || "");
+      setCountry(profileData.country || "");
     };
     fetchProfile();
   }, []);
@@ -54,6 +54,8 @@ export default function EditProfile() {
               style={styles.input}
               value={firstName}
               onChangeText={setFirstName}
+              placeholder="First Name"
+              placeholderTextColor="#aaa"
             />
           </View>
           <View style={styles.inputContainer}>
@@ -61,6 +63,8 @@ export default function EditProfile() {
               style={styles.input}
               value={lastName}
               onChangeText={setLastName}
+              placeholder="Last Name"
+              placeholderTextColor="#aaa"
             />
           </View>
           <View style={styles.inputContainer}>
@@ -68,6 +72,9 @@ export default function EditProfile() {
               style={styles.input}
               value={email}
               onChangeText={setEmail}
+              placeholder="Email"
+              placeholderTextColor="#aaa"
+              keyboardType="email-address"
             />
             <Ionicons
               name="mail"
@@ -81,6 +88,8 @@ export default function EditProfile() {
               style={styles.input}
               value={country}
               onChangeText={setCountry}
+              placeholder="Country"
+              placeholderTextColor="#aaa"
             />
             <Ionicons
               name="location"

@@ -16,7 +16,13 @@ export default function ProfileScreen() {
   const [profileImage, setProfileImage] = useState<any>(
     require("@/assets/images/profile.png")
   );
-  const [profile, setProfile] = useState<any>({});
+  const [profile, setProfile] = useState<any>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    country: "",
+    imageUri: "",
+  });
   const router = useRouter();
 
   useEffect(() => {
@@ -52,7 +58,9 @@ export default function ProfileScreen() {
       setProfileImage({ uri: selectedImage.uri });
 
       // Update profile with the new image
-      await Profile.updateProfile({ imageUri: selectedImage.uri });
+      const updatedProfile = { ...profile, imageUri: selectedImage.uri };
+      setProfile(updatedProfile);
+      await Profile.updateProfile(updatedProfile);
     }
   };
 
@@ -81,6 +89,7 @@ export default function ProfileScreen() {
           <MenuItem
             icon={require("@/assets/iconly/curved/Wallet.png")}
             title="Payment"
+            onPress={() => router.push("/payment")}
           />
           <MenuItem
             icon={require("@/assets/iconly/curved/Notification.png")}
