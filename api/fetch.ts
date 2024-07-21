@@ -1,5 +1,3 @@
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
-
 export enum Method {
   GET = "GET",
   POST = "POST",
@@ -15,45 +13,29 @@ export class Fetch {
     this.token = token;
   }
 
-  private static getUrl(
-    endpoint: string,
-    method: Method,
-    body?: { [key: string]: string }
-  ): string {
+  private static getUrl(endpoint: string): string {
     if (!this.baseURL) {
       throw new Error(
         "Base URL is not defined. Please check your environment configuration."
       );
     }
 
-    let baseUrl = this.baseURL.replace("[]", endpoint);
-
-    // Add any additional query parameters to the URL here if needed
-    // if (endpoint === "/batch") {
-    //   return `${baseUrl}&urls=${body?.urls}`;
-    // }
-
-    // if (body && body.idMembers) {
-    //   baseUrl += `&idMembers=${body.idMembers}`;
-    //   delete body.idMembers;
-    // }
-
-    // const hasQuery = body && Object.keys(body).length > 0;
-    // if (hasQuery) {
-    //   baseUrl += `&${new URLSearchParams(body || {}).toString()}`;
-    // }
-
-    console.log(`Fetching: ${baseUrl}`);
+    let baseUrl = this.baseURL + "/" + endpoint;
 
     return baseUrl;
   }
 
+  /**
+   * Fetch.call("/users", Method.GET)
+   * Fetch.call("/users", Method.POST, { name: "John" })
+   */
   static async call(
     endpoint: string,
     method: Method = Method.GET,
     body?: { [key: string]: string }
   ) {
-    const url = this.getUrl(endpoint, method, body);
+    const url = this.getUrl(endpoint);
+
     if (!url) {
       throw new Error("Cannot load an empty URL");
     }
@@ -63,8 +45,8 @@ export class Fetch {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        // Add authorization header if token is available
-        ...(this.token ? { Authorization: `Bearer ${this.token}` } : {}),
+        "Cache-Control": "no-cache",
+        Authorization: `Bearer ${this.token}`,
       },
       body: method !== Method.GET ? JSON.stringify(body) : undefined,
     });
