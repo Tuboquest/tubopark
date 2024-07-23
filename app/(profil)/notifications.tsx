@@ -8,8 +8,8 @@ import { LinearGradient } from "expo-linear-gradient";
 const iconSources: { [key: string]: any } = {
   success: require("@/assets/iconly/bold/Success.png"),
   error: require("@/assets/iconly/bold/Fail.png"),
-  info: require("@/assets/iconly/bold/Fail.png"),
-  default: require("@/assets/iconly/bold/Fail.png"),
+  info: require("@/assets/iconly/bold/InfoSquare.png"),
+  default: require("@/assets/iconly/bold/Notification.png"),
 };
 
 // Simulated notifications data
