@@ -11,30 +11,16 @@ import * as ImagePicker from "expo-image-picker";
 import { GradientBackground } from "@/components/GradientBackground";
 import { useRouter } from "expo-router";
 import { Profile } from "@/api/profile";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function ProfileScreen() {
   const [profileImage, setProfileImage] = useState<any>(
     require("@/assets/images/profile.png")
   );
-  const [profile, setProfile] = useState<any>({
-    firstName: "Bob",
-    lastName: "Latimpe",
-    email: "boblatime@mail.com",
-    country: "",
-    imageUri: "",
-  });
+
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const profileData = await Profile.getProfile();
-      setProfile(profileData);
-      if (profileData.imageUri) {
-        setProfileImage({ uri: profileData.imageUri });
-      }
-    };
-    fetchProfile();
-  }, []);
+  const { user, setUser } = useAuth();
 
   const chooseImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -51,17 +37,17 @@ export default function ProfileScreen() {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true,
     });
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
-      const selectedImage = result.assets[0];
-      setProfileImage({ uri: selectedImage.uri });
-
-      // Update profile with the new image
-      const updatedProfile = { ...profile, imageUri: selectedImage.uri };
-      setProfile(updatedProfile);
-      await Profile.updateProfile(updatedProfile);
+      let user = await Profile.updateAvatar(result.assets[0].base64 as string);
+      setUser(user);
+      console.log(user);
+    } else {
+      console.log("Image selection cancelled");
     }
+    return;
   };
 
   return (
@@ -71,12 +57,20 @@ export default function ProfileScreen() {
 
         <View style={styles.profileSection}>
           <TouchableOpacity onPress={chooseImage}>
-            <Image source={profileImage} style={styles.profileImage} />
+            {user?.avatar !== null && (
+              <Image
+                source={{ uri: `data:image/jpeg;base64,${user?.avatar}` }}
+                style={styles.profileImage}
+              />
+            )}
+            {user?.avatar === null && (
+              <Image source={profileImage} style={styles.profileImage} />
+            )}
           </TouchableOpacity>
           <Text style={styles.name}>
-            {profile.firstName} {profile.lastName}
+            {user?.firstname} {user?.lastname}
           </Text>
-          <Text style={styles.email}>{profile.email}</Text>
+          <Text style={styles.email}>{user?.email}</Text>
           <View style={styles.separator} />
         </View>
 

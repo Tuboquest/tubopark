@@ -69,14 +69,19 @@ export default function PaymentScreen() {
           </View>
         </LinearGradient>
 
-        <TouchableOpacity style={styles.updateButton}>
-          <LinearGradient
-            colors={gradientColors.button}
-            style={styles.gradientButton}
-          >
-            <Text style={styles.updateButtonText}>Update</Text>
-          </LinearGradient>
-        </TouchableOpacity>
+        <LinearGradient
+          colors={gradientColors.border}
+          style={styles.buttonBorder}
+        >
+          <TouchableOpacity style={styles.updateButton}>
+            <LinearGradient
+              colors={gradientColors.button}
+              style={styles.gradientButton}
+            >
+              <Text style={styles.updateButtonText}>Update</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </LinearGradient>
       </View>
     </GradientBackground>
   );
@@ -141,11 +146,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#fff",
   },
-  updateButton: {
+  buttonBorder: {
+    padding: 3,
+    borderRadius: 100,
     marginTop: 80,
+    width: width * 0.8,
+  },
+  updateButton: {
     borderRadius: 100,
     overflow: "hidden",
-    width: width * 0.8,
   },
   gradientButton: {
     padding: 15,

@@ -16,8 +16,8 @@ import {
 } from "react-native";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("willy@tuboquest.fr");
+  const [password, setPassword] = useState<string>("password");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
   const { token, auth } = useAuth();

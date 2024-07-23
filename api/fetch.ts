@@ -20,7 +20,7 @@ export class Fetch {
       );
     }
 
-    let baseUrl = this.baseURL + "/" + endpoint;
+    let baseUrl = this.baseURL + endpoint;
 
     return baseUrl;
   }

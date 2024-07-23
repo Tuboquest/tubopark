@@ -11,6 +11,7 @@ import { GradientBackground } from "@/components/GradientBackground";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Profile } from "@/api/profile";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function EditProfile() {
   const [firstName, setFirstName] = useState("");
@@ -19,6 +20,8 @@ export default function EditProfile() {
   const [country, setCountry] = useState("");
 
   const router = useRouter();
+
+  const { setUser } = useAuth();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -32,7 +35,12 @@ export default function EditProfile() {
   }, []);
 
   const handleUpdate = async () => {
-    await Profile.updateProfile({ firstName, lastName, email, country });
+    let user = await Profile.updateProfile({
+      firstname: firstName,
+      lastname: lastName,
+      country,
+    });
+    setUser(user);
     router.push("/(tabs)/profile");
   };
 
@@ -67,7 +75,7 @@ export default function EditProfile() {
               placeholderTextColor="#aaa"
             />
           </View>
-          <View style={styles.inputContainer}>
+          {/* <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
               value={email}
@@ -82,7 +90,7 @@ export default function EditProfile() {
               color="#fff"
               style={styles.inputIcon}
             />
-          </View>
+          </View> */}
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}

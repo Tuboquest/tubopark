@@ -6,14 +6,10 @@ export class Profile {
   }
 
   static updateProfile(data: { [key: string]: any }): Promise<any> {
-    const defaultData = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      country: "",
-      imageUri: "",
-      ...data,
-    };
-    return Fetch.call("/profile", Method.PUT, defaultData);
+    return Fetch.call("/profile", Method.PUT, data);
+  }
+
+  static updateAvatar(avatar: string): Promise<any> {
+    return Fetch.call("/profile/avatar", Method.PUT, { avatar });
   }
 }

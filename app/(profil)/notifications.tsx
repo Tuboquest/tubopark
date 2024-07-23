@@ -4,7 +4,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { GradientBackground } from "@/components/GradientBackground";
 import { LinearGradient } from "expo-linear-gradient";
-import { Notifications } from "@/api/notifications";
 
 const iconSources: { [key: string]: any } = {
   success: require("@/assets/iconly/bold/Success.png"),
@@ -13,13 +12,35 @@ const iconSources: { [key: string]: any } = {
   default: require("@/assets/iconly/bold/Fail.png"),
 };
 
+// Simulated notifications data
+const simulatedNotifications = [
+  { id: 1, title: "Backup Successful", date: "2023-07-21", status: "success" },
+  { id: 2, title: "Login Attempt Failed", date: "2023-07-20", status: "error" },
+  { id: 3, title: "New Update Available", date: "2023-07-19", status: "info" },
+  {
+    id: 4,
+    title: "System Check Complete",
+    date: "2023-07-18",
+    status: "success",
+  },
+  {
+    id: 5,
+    title: "Password Change Required",
+    date: "2023-07-17",
+    status: "error",
+  },
+];
+
 export default function NotificationsScreen() {
   const [notificationsData, setNotificationsData] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const data = await Notifications.getNotifications();
+      // Simulate an API call to fetch notifications
+      const data = await new Promise((resolve) =>
+        setTimeout(() => resolve(simulatedNotifications), 1000)
+      );
       setNotificationsData(data);
     };
 

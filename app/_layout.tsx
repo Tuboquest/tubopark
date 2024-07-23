@@ -94,6 +94,11 @@ export default function RootLayout() {
               options={{ headerShown: false }}
             />
 
+            <Stack.Screen
+              name="(profil)/payment"
+              options={{ headerShown: false }}
+            />
+
             <Stack.Screen name="+not-found" />
           </Stack>
         </SafeAreaProvider>
