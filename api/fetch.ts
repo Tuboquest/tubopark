@@ -1,5 +1,3 @@
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
-
 export enum Method {
   GET = "GET",
   POST = "POST",
@@ -15,47 +13,44 @@ export class Fetch {
     this.token = token;
   }
 
-  private static getUrl(
-    endpoint: string,
-    method: Method,
-    body?: { [key: string]: string }
-  ): string {
-    let baseUrl = this.baseURL
-      .replace("[]", endpoint)
-    //   .replace("apiToken", this.token)
-    if (endpoint === "/batch") {
-      return `${baseUrl}&urls=${body?.urls}`;
+  private static getUrl(endpoint: string): string {
+    if (!this.baseURL) {
+      throw new Error(
+        "Base URL is not defined. Please check your environment configuration."
+      );
     }
 
-    // if (body && body.idMembers) {
-    //   baseUrl += `&idMembers=${body.idMembers}`;
-    //   delete body.idMembers;
-    // }
-
-    // const hasQuery = body && Object.keys(body).length > 0;
-    
-    // if (hasQuery) {
-    //   baseUrl += `&${new URLSearchParams(body || {}).toString()}`;
-    // }
-
-    console.log(`Fetching: ${baseUrl}`);
+    let baseUrl = this.baseURL + endpoint;
 
     return baseUrl;
   }
 
+  /**
+   * Fetch.call("/users", Method.GET)
+   * Fetch.call("/users", Method.POST, { name: "John" })
+   */
   static async call(
     endpoint: string,
     method: Method = Method.GET,
     body?: { [key: string]: string }
   ) {
+    const url = this.getUrl(endpoint);
 
-    const response = await fetch(this.getUrl(endpoint, method, body), {
+    // console.log(url);
+
+    if (!url) {
+      throw new Error("Cannot load an empty URL");
+    }
+
+    const response = await fetch(url, {
       method,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "Cache-Control": "no-cache",
+        Authorization: `Bearer ${this.token}`,
       },
-      body : JSON.stringify(body),
+      body: method !== Method.GET ? JSON.stringify(body) : undefined,
     });
 
     try {

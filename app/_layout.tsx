@@ -89,6 +89,10 @@ export default function RootLayout() {
               name="(others)/statistic"
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+              name="(others)/diskList"
+              options={{ headerShown: false }}
+            />
             <Stack.Screen name="+not-found" />
           </Stack>
         </SafeAreaProvider>

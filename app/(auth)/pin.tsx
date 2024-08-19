@@ -6,13 +6,7 @@ import LogoArea from "@/components/LogoArea";
 import { useAuth } from "@/hooks/useAuth";
 import { router } from "expo-router";
 import React, { useRef, useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 export default function PinScren() {
   const [pinTyped, setPinTyped] = useState<string[]>(["", "", "", ""]);
@@ -35,7 +29,7 @@ export default function PinScren() {
     const passCode = pinTyped[0] + pinTyped[1] + pinTyped[2] + pinTyped[3];
     console.log("Save pin attempt:", { passCode, token });
 
-    // await Auth.setPasscord(token,
+    await Auth.setPasscode(passCode, token);
 
     setIsPinSaved(true);
     setPinSaved(pinTyped);

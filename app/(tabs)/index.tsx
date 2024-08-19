@@ -1,4 +1,5 @@
-import { Image, StyleSheet, Platform } from "react-native";
+import React from "react";
+import { Text, StyleSheet, Platform, View } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -6,57 +7,51 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Link, router } from "expo-router";
 import { ClassicButton } from "@/components/button/ClassicButton";
+import { GradientBackground } from "@/components/GradientBackground";
+import LogoArea from "@/components/LogoArea";
 
 export default function HomeScreen() {
+  const [userName, setUserName] = React.useState<string>("Willy");
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        {/* {Platform.select({ ios: "cmd + d", android: "cmd + m" })} */}
-
-        <HelloWave />
-      </ThemedView>
-      <Link
-        style={{
-          color: "white",
-          textDecorationLine: "underline",
-          fontSize: 24,
-        }}
-        href={"test-passcode"}
-      >
-        Test Passcode
-      </Link>
-      <ClassicButton
-        title={"TO STATITICS"}
-        onPress={() => router?.push("(others)/statistic")}
-      />
-    </ParallaxScrollView>
+    <GradientBackground>
+      <View style={styles.titleContainer}>
+        <LogoArea />
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>Welcome back to TuboQuest</Text>
+          <Text style={styles.text}>{userName}</Text>
+        </View>
+        {/* <Link
+          style={{
+            color: "white",
+            textDecorationLine: "underline",
+            fontSize: 24,
+          }}
+          href={"test-passcode"}
+        >
+          Test Passcode
+        </Link>
+        <ClassicButton
+          title={"TO STATITICS"}
+          onPress={() => router?.push("(others)/statistic")}
+        /> */}
+      </View>
+    </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: "row",
+    alignItems: "center",
+    height: "100%",
+    gap: 200,
+  },
+  textContainer: {
     alignItems: "center",
     gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+  text: {
+    color: "white",
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });

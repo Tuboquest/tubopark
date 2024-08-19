@@ -1,3 +1,4 @@
+import { Fetch } from "@/api";
 import { Auth } from "@/api/auth";
 import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
@@ -16,22 +17,23 @@ import {
 } from "react-native";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("willy@tuboquest.fr");
+  const [password, setPassword] = useState<string>("password");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
   const { token, auth } = useAuth();
 
   const handleLogin = async () => {
-    // Implement your login logic here
-    const user = await Auth.login(email, password);
+    //TODO remove comments when backend is ON
 
-    auth(user.token, user);
+    // const user = await Auth.login(email, password);
 
-    if (!user.token) {
-      alert(user.email + user.password);
-      return;
-    }
+    // auth(user.token, user);
+
+    // if (!user.token) {
+    //   alert(user.email + user.password);
+    //   return;
+    // }
 
     router?.push("/(tabs)");
   };

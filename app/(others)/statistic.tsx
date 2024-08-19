@@ -47,6 +47,7 @@ export default function StatisticScreen() {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Your Statistics</Text>
         </View>
+        <Text style={styles.title}>Time app used</Text>
         <LineChart
           data={{
             labels: ["January", "February", "March", "April", "May", "June"],
@@ -59,7 +60,7 @@ export default function StatisticScreen() {
           width={350} // from react-native
           height={220}
           // yAxisLabel="day"
-          // yAxisSuffix="k"
+          yAxisSuffix="days"
           yAxisInterval={1} // optional, defaults to 1
           chartConfig={{
             backgroundColor: "#074264",
