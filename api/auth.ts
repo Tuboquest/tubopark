@@ -24,8 +24,8 @@ export class Auth {
     return Fetch.call("/logout", Method.POST);
   }
 
-  static setPasscord(token: string, passCode: string): Promise<any> {
-    return Fetch.call("/setPasscode", Method.POST, {
+  static setPasscode(passCode: string): Promise<any> {
+    return Fetch.call("/set-passcode", Method.POST, {
       passCode: passCode,
     });
   }

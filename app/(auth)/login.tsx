@@ -1,3 +1,4 @@
+import { Fetch } from "@/api";
 import { Auth } from "@/api/auth";
 import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
@@ -20,10 +21,11 @@ export default function LoginScreen() {
   const [password, setPassword] = useState<string>("password");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
-  const { token, auth } = useAuth();
+  const { auth } = useAuth();
 
   const handleLogin = async () => {
-    // Implement your login logic here
+    //TODO remove comments when backend is ON
+
     const user = await Auth.login(email, password);
 
     auth(user.token, user);

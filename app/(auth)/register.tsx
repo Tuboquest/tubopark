@@ -20,6 +20,8 @@ export default function RegisterScreen() {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
 
+  const { auth } = useAuth();
+
   const handleRegister = async () => {
     if (password !== confirmPassword) {
       alert("Password and Confirm Password do not match");
@@ -42,16 +44,14 @@ export default function RegisterScreen() {
       return;
     }
 
-    // const user = await Auth.register(email, password, confirmPassword);
+    const user = await Auth.register(email, password, confirmPassword);
 
-    // const { auth } = useAuth();
+    if (!user.token) {
+      alert(user.email + user.password);
+      return;
+    }
 
-    // if (!user.token) {
-    //   alert(user.email + user.password);
-    //   return;
-    // }
-
-    // auth(user.token, user);
+    auth(user.token, user);
 
     router?.push("/(auth)/pin");
   };

@@ -39,7 +39,6 @@ export class Fetch {
     if (!url) {
       throw new Error("Cannot load an empty URL");
     }
-
     const response = await fetch(url, {
       method,
       headers: {
@@ -52,6 +51,7 @@ export class Fetch {
     });
 
     try {
+      // console.log(response.json());
       return await response.json();
     } catch (e) {
       console.error(`Error during fetch: ${e}`);
