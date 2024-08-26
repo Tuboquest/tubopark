@@ -1,3 +1,4 @@
+import { Fetch } from "@/api";
 import { User } from "@/types/User";
 import React, { ReactElement, createContext, useState } from "react";
 
@@ -19,6 +20,7 @@ export const UserProvider = ({ children }: { children: ReactElement }) => {
   const auth = (token: string, user: User) => {
     setToken(token);
     setUser(user);
+    Fetch.setToken(user.token);
   };
 
   const logout = () => {

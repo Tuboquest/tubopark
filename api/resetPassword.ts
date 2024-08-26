@@ -17,7 +17,7 @@ export class resetPassword {
   static resetPassword(
     token: string,
     password: string,
-    confirmPassword
+    confirmPassword: string
   ): Promise<any> {
     return Fetch.call("/reset-password", Method.POST);
   }
