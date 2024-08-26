@@ -57,8 +57,6 @@ export default function RootLayout() {
               options={{ headerShown: false }}
             />
             <Stack.Screen name="(auth)/pin" options={{ headerShown: false }} />
-            {/* <Stack.Screen name="(auth)/forgot-password" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)/reset-password" options={{ headerShown: false }} /> */}
             <Stack.Screen
               name="(onBoarding)/pageOne"
               options={{ headerShown: false }}
@@ -75,18 +73,32 @@ export default function RootLayout() {
               name="(onBoarding)/pageFour"
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name="(resetPassword)/sendMail"
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name="(resetPassword)/createNewPassword"
               options={{ headerShown: false }}
             />
             <Stack.Screen
+              name="(profil)/editProfile"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="(profil)/notifications"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="(profil)/payment"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
               name="(others)/statistic"
+              options={{ headerShown: false }}
+            />
+             <Stack.Screen
+              name="(maps)/index"
               options={{ headerShown: false }}
             />
             <Stack.Screen

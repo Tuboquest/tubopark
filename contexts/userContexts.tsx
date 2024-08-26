@@ -5,6 +5,7 @@ import React, { ReactElement, createContext, useState } from "react";
 export interface UserContextType {
   token: string;
   user: User | null;
+  setUser: (user: User) => void;
   auth: (token: string, user: User) => void;
   logout: () => void;
 }
@@ -29,7 +30,7 @@ export const UserProvider = ({ children }: { children: ReactElement }) => {
   };
 
   return (
-    <UserContext.Provider value={{ token, user, auth, logout }}>
+    <UserContext.Provider value={{ token, user, auth, logout, setUser }}>
       {children}
     </UserContext.Provider>
   );

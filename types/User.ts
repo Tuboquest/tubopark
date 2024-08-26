@@ -1,7 +1,8 @@
 export type User = {
-  name: string;
+  firstname: string;
+  lastname: string;
+  country: string;
   email: string;
-  // password: string;
   is_premium: boolean;
   is_admin: boolean;
   has_disk: boolean;
@@ -11,7 +12,7 @@ export type User = {
     serial_number: string;
   };
   avatar: string;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
   token: string;
 };

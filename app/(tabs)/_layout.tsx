@@ -34,7 +34,21 @@ export default function TabLayout() {
           title: "Camera",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "camera" : "camera-outline"}
+
+              name={focused ? "map" : "map-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "person" : "person-outline"}
+
               color={color}
             />
           ),
@@ -52,7 +66,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="wheel"
         options={{
-          title: "Parking wheel",
+          title: "Parking Wheel",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "time" : "time-outline"}

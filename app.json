@@ -13,14 +13,22 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyACV8FnQGZDcYF_V6nXdQYvNlIHRDe_p-Y"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.phlostock.tuboparkapp"
+      "package": "com.phlostock.tuboparkapp",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyACV8FnQGZDcYF_V6nXdQYvNlIHRDe_p-Y"
+        }
+      }
     },
     "web": {
       "bundler": "metro",

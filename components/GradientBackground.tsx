@@ -12,6 +12,8 @@ export const GradientBackground: FC<GradientBackgroundProps> = ({
   return (
     <LinearGradient
       colors={["#1E95D9", "#000"]}
+      start={{ x: 0.5, y: 0 }}
+      end={{ x: 0.5, y: 0.7 }}
       style={{ flex: 1, paddingVertical: 10 }}
     >
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
