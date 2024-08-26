@@ -32,6 +32,10 @@ export default function StartScreen() {
             title={"Profile"}
             onPress={() => router?.push("/(tabs)/profile")}
           />
+                   <ClassicButton
+            title={"Maps"}
+            onPress={() => router?.push("/(tabs)/maps")}
+          />
         </View>
       </View>
     </GradientBackground>

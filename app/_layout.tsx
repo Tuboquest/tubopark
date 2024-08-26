@@ -73,32 +73,30 @@ export default function RootLayout() {
               name="(onBoarding)/pageFour"
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name="(resetPassword)/sendMail"
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name="(resetPassword)/createNewPassword"
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name="(profil)/editProfile"
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name="(profil)/notifications"
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name="(profil)/payment"
               options={{ headerShown: false }}
             />
-
+            <Stack.Screen
+              name="(maps)/index"
+              options={{ headerShown: false }}
+            />
             <Stack.Screen name="+not-found" />
           </Stack>
         </SafeAreaProvider>

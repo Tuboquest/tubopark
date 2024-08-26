@@ -34,7 +34,7 @@ export default function TabLayout() {
           title: "Explore",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
+              name={focused ? "map" : "map-outline"}
               color={color}
             />
           ),
@@ -55,7 +55,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="wheel"
         options={{
-          title: "Parking wheel",
+          title: "Parking Wheel",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "time" : "time-outline"}
