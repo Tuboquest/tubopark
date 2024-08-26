@@ -5,13 +5,14 @@ export class Disk {
     return Fetch.call("/disks");
   }
 
-  // static rotate(angleNumber: number): Promise<any> {
-  //   return Fetch.call("/rotate", Method.POST, {
-  //     angle: angleNumber,
-  //   });
-  // }
+  static rotate(angleNumber: number): Promise<any> {
+    return Fetch.call("/rotate", Method.POST, {
+      angle: String(angleNumber),
+    });
+  }
 
   static pairDisk(diskId: string): Promise<any> {
+    console.log("pairing disk");
     return Fetch.call("/disks/" + diskId + "/pair", Method.POST, {
       diskId: diskId,
     });

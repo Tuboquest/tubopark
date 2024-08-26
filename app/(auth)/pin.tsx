@@ -29,7 +29,7 @@ export default function PinScren() {
     const passCode = pinTyped[0] + pinTyped[1] + pinTyped[2] + pinTyped[3];
     console.log("Save pin attempt:", { passCode, token });
 
-    await Auth.setPasscode(passCode, token);
+    await Auth.setPasscode(passCode);
 
     setIsPinSaved(true);
     setPinSaved(pinTyped);

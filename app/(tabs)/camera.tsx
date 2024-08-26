@@ -1,11 +1,6 @@
 import { Image, StyleSheet, Platform, Text, View } from "react-native";
 
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { Link, router } from "expo-router";
-import { ClassicButton } from "@/components/button/ClassicButton";
+import Video from "react-native-video";
 import { GradientBackground } from "@/components/GradientBackground";
 
 export default function CameraScreen() {
@@ -14,6 +9,14 @@ export default function CameraScreen() {
       <View style={styles.titleContainer}>
         <Text style={styles.text}>Camera page coming soon</Text>
       </View>
+
+      <Video
+        source={{ uri: "https://youtu.be/H3XIJYEPdus?si=8qsKO0SpqyCyAJu9." }}
+        style={styles.video}
+        controls={true}
+        resizeMode="cover"
+        repeat={true}
+      />
     </GradientBackground>
   );
 }
@@ -29,5 +32,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontWeight: "bold",
+  },
+  video: {
+    width: 200 * 0.9,
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 20,
   },
 });

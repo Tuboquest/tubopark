@@ -8055,6 +8055,11 @@ react-native-svg@^15.4.0:
     css-tree "^1.1.3"
     warn-once "0.1.1"
 
+react-native-video@^6.4.5:
+  version "6.4.5"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-6.4.5.tgz#f3b81ff0546cff67c60ff5720c053f7ee5d2206b"
+  integrity sha512-pq0oD/lm0NZv/nkQtNy2Bq1eG1+nlb9vVNgdeIz7twDhxLpqiwv4ef39UQlUHfPdnTa9fDyAke6VBc+0ogNjfA==
+
 react-native-web@~0.19.10:
   version "0.19.12"
   resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.19.12.tgz#30d1fd70bdff7886f43c0c2698629d830fade6bc"

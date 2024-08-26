@@ -9,16 +9,17 @@ import { Link, router } from "expo-router";
 import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
 import LogoArea from "@/components/LogoArea";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function HomeScreen() {
-  const [userName, setUserName] = React.useState<string>("Willy");
+  const { user } = useAuth();
   return (
     <GradientBackground>
       <View style={styles.titleContainer}>
         <LogoArea />
         <View style={styles.textContainer}>
           <Text style={styles.text}>Welcome back to TuboQuest</Text>
-          <Text style={styles.text}>{userName}</Text>
+          <Text style={styles.text}>{user?.name}</Text>
         </View>
         {/* <Link
           style={{

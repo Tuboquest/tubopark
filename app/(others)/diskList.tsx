@@ -3,6 +3,7 @@ import { ClassicButton } from "@/components/button/ClassicButton";
 import { GradientBackground } from "@/components/GradientBackground";
 import LogoArea from "@/components/LogoArea";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { useAuth } from "@/hooks/useAuth";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import React, { useEffect } from "react";
@@ -16,6 +17,10 @@ export default function DiskListScreen() {
     { name: "template2", serial_number: "123456789" },
   ]);
 
+  const { user } = useAuth();
+
+  console.log("user.has_disk", user?.has_disk);
+
   useEffect(() => {
     const fetchData = () => {
       Disk.diskList().then((data) => {
@@ -23,11 +28,10 @@ export default function DiskListScreen() {
         data && setDiskList(data);
       });
     };
-
     fetchData();
   }, []);
 
-  console.log(" diskList,", diskList.message);
+  // console.log(" diskList,", diskList.message);
 
   return (
     <ParallaxScrollView>
@@ -39,10 +43,29 @@ export default function DiskListScreen() {
             <Text style={styles.title}>List of unpaired disk</Text>
           </View>
           <View style={styles.diskListContainer}>
-            {diskList && !diskList.message ? (
-              diskList?.map((disk: Record<string, any>) => {
+            {user?.has_disk && (
+              <View style={styles.logo}>
+                <Text style={styles.logoText}>DISK</Text>
+                <Text style={styles.logoText}>{user.disk.name}</Text>
+                <Text style={styles.serialNumberText}>
+                  {user.disk.serial_number}
+                </Text>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    Disk.pairDisk(user.disk.id);
+                    router?.push("/(tabs)");
+                  }}
+                >
+                  <Text style={styles.buttonText}>UnPair</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+
+            {!user?.has_disk && diskList && !diskList.message ? (
+              diskList?.map((disk: Record<string, any>, diskIndex: number) => {
                 return (
-                  <View key={disk.id} style={styles.logo}>
+                  <View key={diskIndex} style={styles.logo}>
                     <Text style={styles.logoText}>DISK</Text>
                     <Text style={styles.logoText}>{disk.name}</Text>
                     <Text style={styles.serialNumberText}>
@@ -61,8 +84,8 @@ export default function DiskListScreen() {
                 );
               })
             ) : (
-              <View>
-                <Text style={styles.loadingText}>Loading...</Text>
+              <View style={{ height: 500 }}>
+                {/* <Text style={styles.loadingText}>Loading...</Text> */}
               </View>
             )}
           </View>
