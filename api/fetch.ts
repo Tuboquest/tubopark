@@ -6,11 +6,18 @@ export enum Method {
 }
 
 export class Fetch {
+  static getUserData(): any {
+    throw new Error("Method not implemented.");
+  }
   private static baseURL: string = process.env.EXPO_PUBLIC_BASE_URL ?? "";
   private static token: string = "";
 
   static setToken(token: string) {
     this.token = token;
+  }
+
+  static getUser() {
+    return this.call("/me", Method.GET);
   }
 
   private static getUrl(endpoint: string): string {
@@ -19,9 +26,7 @@ export class Fetch {
         "Base URL is not defined. Please check your environment configuration."
       );
     }
-
     let baseUrl = this.baseURL + endpoint;
-
     return baseUrl;
   }
 
@@ -36,7 +41,7 @@ export class Fetch {
   ) {
     const url = this.getUrl(endpoint);
 
-    // console.log(url);
+    console.log(url);
 
     if (!url) {
       throw new Error("Cannot load an empty URL");
@@ -57,7 +62,9 @@ export class Fetch {
     // console.log(await response.json());
 
     try {
-      return await response.json();
+      let r = await response.json();
+      // console.log(r);
+      return r;
     } catch (e) {
       console.error(`Error during fetch: ${e}`);
       return null;

@@ -68,7 +68,7 @@ export default function NotificationsScreen() {
     return iconSources[status] || iconSources.default;
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = (item: any) => (
     <View style={styles.notificationItem}>
       <LinearGradient
         colors={getGradientColors(item.status)}

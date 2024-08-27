@@ -11,14 +11,14 @@ export class Disk {
     });
   }
 
-  static pairDisk(diskId: string): Promise<any> {
-    console.log("pairing disk");
+  static pairDisk(diskId: string, pairingCode: string): Promise<any> {
     return Fetch.call("/disks/" + diskId + "/pair", Method.POST, {
       diskId: diskId,
+      pairing_code: pairingCode,
     });
   }
 
-  static unpairDisk(token: string, diskId: string): Promise<any> {
+  static unPairDisk(diskId: string): Promise<any> {
     return Fetch.call("/disks/" + diskId + "/unpair", Method.POST, {
       diskId: diskId,
     });

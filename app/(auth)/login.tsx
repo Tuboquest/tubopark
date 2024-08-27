@@ -24,8 +24,6 @@ export default function LoginScreen() {
   const { auth } = useAuth();
 
   const handleLogin = async () => {
-    //TODO remove comments when backend is ON
-
     const user = await Auth.login(email, password);
 
     auth(user.token, user);
