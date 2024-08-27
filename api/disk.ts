@@ -6,19 +6,19 @@ export class Disk {
   }
 
   static rotate(angleNumber: number): Promise<any> {
-    return Fetch.call("/rotate", Method.POST, {
+    return Fetch.call("/c/rotate", Method.POST, {
       angle: String(angleNumber),
     });
   }
 
-  static pairDisk(diskId: string): Promise<any> {
-    console.log("pairing disk");
+  static pairDisk(diskId: string, pairingCode: string): Promise<any> {
     return Fetch.call("/disks/" + diskId + "/pair", Method.POST, {
       diskId: diskId,
+      pairing_code: pairingCode,
     });
   }
 
-  static unpairDisk(token: string, diskId: string): Promise<any> {
+  static unPairDisk(diskId: string): Promise<any> {
     return Fetch.call("/disks/" + diskId + "/unpair", Method.POST, {
       diskId: diskId,
     });

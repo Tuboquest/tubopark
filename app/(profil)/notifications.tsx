@@ -32,7 +32,9 @@ const simulatedNotifications = [
 ];
 
 export default function NotificationsScreen() {
-  const [notificationsData, setNotificationsData] = useState([]);
+  const [notificationsData, setNotificationsData] = useState<
+    { id: number; title: string; date: string; status: string }[]
+  >([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -41,13 +43,15 @@ export default function NotificationsScreen() {
       const data = await new Promise((resolve) =>
         setTimeout(() => resolve(simulatedNotifications), 1000)
       );
-      setNotificationsData(data);
+      setNotificationsData(
+        data as { id: number; title: string; date: string; status: string }[]
+      );
     };
 
     fetchNotifications();
   }, []);
 
-  const getGradientColors = (status) => {
+  const getGradientColors = (status: any) => {
     switch (status) {
       case "success":
         return ["#39E180", "#1AB65C"];
@@ -60,11 +64,11 @@ export default function NotificationsScreen() {
     }
   };
 
-  const getIconSource = (status) => {
+  const getIconSource = (status: string | number) => {
     return iconSources[status] || iconSources.default;
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = (item: any) => (
     <View style={styles.notificationItem}>
       <LinearGradient
         colors={getGradientColors(item.status)}

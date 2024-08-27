@@ -76,57 +76,8 @@ export default function PinScren() {
         <Text style={styles.description}>
           The pin code will be used to connect to the application
         </Text>
-        {/* <View style={styles.numberPad}>
-          <View style={styles.numberPad}>
-            <View style={styles.numberButton}>
-              <TextInput
-                maxLength={1}
-                style={styles.numberText}
-                ref={firstRef}
-                autoFocus={true}
-                showSoftInputOnFocus={true}
-                keyboardType="numeric"
-                value={pinTyped[0]}
-                onChangeText={(value) => onChangeHandler(0, value, setPinTyped)}
-              ></TextInput>
-            </View>
-            <View style={styles.numberButton}>
-              <TextInput
-                maxLength={1}
-                style={styles.numberText}
-                ref={secondRef}
-                keyboardType="numeric"
-                value={pinTyped[1]}
-                onChangeText={(value) => onChangeHandler(1, value, setPinTyped)}
-              ></TextInput>
-            </View>
-            <View style={styles.numberButton}>
-              <TextInput
-                maxLength={1}
-                style={styles.numberText}
-                ref={thirdRef}
-                keyboardType="numeric"
-                value={pinTyped[2]}
-                onChangeText={(value) => onChangeHandler(2, value, setPinTyped)}
-              ></TextInput>
-            </View>
-            <View style={styles.numberButton}>
-              <TextInput
-                maxLength={1}
-                style={styles.numberText}
-                ref={fourthRef}
-                keyboardType="numeric"
-                value={pinTyped[3]}
-                onChangeText={(value) => onChangeHandler(3, value, setPinTyped)}
-              ></TextInput>
-            </View>
-          </View>
-        </View> */}
-        <PinInput
-          pinTyped={pinTyped}
-          // onChangeHandler={onChangeHandler}
-          setPinTyped={setPinTyped}
-        />
+
+        <PinInput pinTyped={pinTyped} setPinTyped={setPinTyped} />
         {isPinSaved ? (
           <ClassicButton title={"Create"} onPress={handleConfirmPin} />
         ) : (

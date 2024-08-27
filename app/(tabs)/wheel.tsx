@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import { ClockDisk } from "@/components/parking-wheel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GradientBackground } from "@/components/GradientBackground";
 import { Colors } from "@/constants/Colors";
 import { Theme } from "@/constants/Theme";
@@ -9,32 +9,49 @@ import LogoArea from "@/components/LogoArea";
 import { router } from "expo-router";
 import { Disk } from "@/api/disk";
 import { useAuth } from "@/hooks/useAuth";
+import { User } from "@/types/User";
+import { Fetch } from "@/api";
 
 export default function WheelScreen() {
-  const [angle, setAngle] = useState<number>(45);
-  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [angle, setAngle] = useState<number>(0); //RADIANT
 
-  const handleRotateDisk = (angle: number) => {
-    setAngle(angle);
-    console.log(`Disk rotated to ${angle} degrees`);
-    Disk.rotate(45);
+  const [user, setUserState] = useState<User | undefined>();
+
+  // console.log("user: ", user);
+
+  const submissionDelay = 3000;
+  const [requestSubmitted, setRequestSubmitted] = useState<boolean>(false);
+
+  const handleRotateDisk = async (newAngle: number) => {
+    if (newAngle > 360) {
+      newAngle = newAngle - 360;
+    }
+
+    if (requestSubmitted) return;
+    setRequestSubmitted(true);
+    setTimeout(() => {
+      setRequestSubmitted(false);
+    }, submissionDelay);
+    setAngle(newAngle);
+
+    if (user?.has_disk) {
+      console.log(`Disk rotated to ${Math.round(newAngle)} degrees`);
+      Disk.rotate(newAngle);
+    }
   };
 
-  const { user } = useAuth();
+  useEffect(() => {
+    const fetchData = async () => {
+      const tampUser = await Fetch?.getUser();
+      setUserState(tampUser);
+      // console.log("user: ", tampUser);
+    };
+    fetchData();
+  }, []);
 
   return (
     <GradientBackground>
       <View style={styles.container}>
-        {/* <Text
-        style={{
-          fontSize: 32,
-          color: Colors?.dark?.text,
-          fontWeight: "bold",
-          paddingHorizontal: Theme?.paddingHorizontal,
-        }}
-      >
-        Screen title
-      </Text> */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity>
             <Image

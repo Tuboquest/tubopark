@@ -7,7 +7,6 @@ import { useFonts } from "expo-font";
 import { Stack, Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -29,9 +28,9 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+  // if (!loaded) {
+  //   return null;
+  // }
 
   return (
     <UserProvider>
@@ -97,7 +96,7 @@ export default function RootLayout() {
               name="(others)/statistic"
               options={{ headerShown: false }}
             />
-             <Stack.Screen
+            <Stack.Screen
               name="(maps)/index"
               options={{ headerShown: false }}
             />

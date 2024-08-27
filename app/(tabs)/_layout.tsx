@@ -17,43 +17,18 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="wheel"
         options={{
-          title: "Home",
+          title: "Parking Wheel",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "home" : "home-outline"}
+              name={focused ? "time" : "time-outline"}
               color={color}
             />
           ),
         }}
       />
-      <Tabs.Screen
-        name="camera"
-        options={{
-          title: "Camera",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
 
-              name={focused ? "map" : "map-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "person" : "person-outline"}
-
-              color={color}
-            />
-          ),
-        }}
-      />
       <Tabs.Screen
         name="map"
         options={{
@@ -64,12 +39,21 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="wheel"
+        name="camera"
         options={{
-          title: "Parking Wheel",
+          title: "Camera",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? "map" : "map-outline"} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "time" : "time-outline"}
+              name={focused ? "person" : "person-outline"}
               color={color}
             />
           ),

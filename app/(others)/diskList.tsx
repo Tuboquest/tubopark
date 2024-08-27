@@ -9,7 +9,11 @@ import { router } from "expo-router";
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
+import { User } from "@/types/User";
+import { Fetch } from "@/api";
+import TestPasscodeScreen from "@/app/test-passcode";
+import { PinInput } from "@/components/input/PinInput";
 
 export default function DiskListScreen() {
   const [diskList, setDiskList] = useState<any>([
@@ -17,21 +21,56 @@ export default function DiskListScreen() {
     { name: "template2", serial_number: "123456789" },
   ]);
 
-  const { user } = useAuth();
+  const [user, setUserState] = useState<User | undefined>();
 
-  console.log("user.has_disk", user?.has_disk);
+  const [pinTyped, setPinTyped] = useState<string[]>(["", "", "", ""]);
+  const [diskId, setDiskId] = useState<string>("");
+  const [isEditingPin, setIsEditingPin] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = () => {
       Disk.diskList().then((data) => {
-        console.log("data", data);
+        // console.log("data", data);
         data && setDiskList(data);
       });
     };
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const tampUser = await Fetch?.getUser();
+      setUserState(tampUser);
+      // console.log("user: ", tampUser);
+    };
+    fetchData();
+  }, []);
+
   // console.log(" diskList,", diskList.message);
+
+  const onPair = (diskID: string) => {
+    setIsEditingPin(true);
+    setDiskId(diskID);
+  };
+
+  const onUnPair = (diskID: string) => {
+    Disk.unPairDisk(diskID);
+    router?.push("/(tabs)/wheel");
+  };
+
+  const testPassCode = async () => {
+    const passCode = pinTyped[0] + pinTyped[1] + pinTyped[2] + pinTyped[3];
+    const result = await Disk.pairDisk(diskId, passCode);
+    console.log("result", result.message);
+    setIsEditingPin(false);
+    setPinTyped(["", "", "", ""]);
+    if (result.message === "Invalid pairing code") {
+      alert("failed to pair");
+      return;
+    }
+
+    router?.push("/(tabs)/wheel");
+  };
 
   return (
     <ParallaxScrollView>
@@ -42,6 +81,20 @@ export default function DiskListScreen() {
           <View style={styles.titleContainer}>
             <Text style={styles.title}>List of unpaired disk</Text>
           </View>
+
+          {isEditingPin && (
+            <View style={styles.passcodeContainer}>
+              <Text style={styles.logoText}>Disk passcode</Text>
+              <PinInput pinTyped={pinTyped} setPinTyped={setPinTyped} />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => testPassCode()}
+              >
+                <Text style={styles.buttonText}>Confirm</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
           <View style={styles.diskListContainer}>
             {user?.has_disk && (
               <View style={styles.logo}>
@@ -52,17 +105,17 @@ export default function DiskListScreen() {
                 </Text>
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={() => {
-                    Disk.pairDisk(user.disk.id);
-                    router?.push("/(tabs)");
-                  }}
+                  onPress={() => onUnPair(user.disk.id)}
                 >
                   <Text style={styles.buttonText}>UnPair</Text>
                 </TouchableOpacity>
               </View>
             )}
 
-            {!user?.has_disk && diskList && !diskList.message ? (
+            {!user?.has_disk &&
+            diskList &&
+            !diskList.message &&
+            !isEditingPin ? (
               diskList?.map((disk: Record<string, any>, diskIndex: number) => {
                 return (
                   <View key={diskIndex} style={styles.logo}>
@@ -73,10 +126,7 @@ export default function DiskListScreen() {
                     </Text>
                     <TouchableOpacity
                       style={styles.button}
-                      onPress={() => {
-                        Disk.pairDisk(disk.id);
-                        router?.push("/(tabs)");
-                      }}
+                      onPress={() => onPair(disk.id)}
                     >
                       <Text style={styles.buttonText}>Pair</Text>
                     </TouchableOpacity>
@@ -107,6 +157,15 @@ const styles = StyleSheet.create({
   titleContainer: {
     width: "100%",
     marginTop: 75,
+  },
+  passcodeContainer: {
+    padding: 10,
+    borderRadius: 50,
+    backgroundColor: "#18202d",
+    borderWidth: 2,
+    borderColor: "#1E95D9",
+    justifyContent: "center",
+    alignItems: "center",
   },
   header: {
     flexDirection: "row",
