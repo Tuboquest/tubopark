@@ -24,18 +24,6 @@ export default function StartScreen() {
             title={"Login"}
             onPress={() => router?.push("/(auth)/login")}
           />
-          {/* <ClassicButton
-            title={"OnBoarding"}
-            onPress={() => router?.push("/(onBoarding)/pageOne")}
-          /> */}
-          <ClassicButton
-            title={"Profile"}
-            onPress={() => router?.push("/(tabs)/profile")}
-          />
-                   <ClassicButton
-            title={"Maps"}
-            onPress={() => router?.push("/(tabs)/maps")}
-          />
         </View>
       </View>
     </GradientBackground>

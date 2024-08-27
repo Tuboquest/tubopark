@@ -36,9 +36,12 @@ export class Fetch {
   ) {
     const url = this.getUrl(endpoint);
 
+    // console.log(url);
+
     if (!url) {
       throw new Error("Cannot load an empty URL");
     }
+
     const response = await fetch(url, {
       method,
       headers: {
@@ -50,8 +53,10 @@ export class Fetch {
       body: method !== Method.GET ? JSON.stringify(body) : undefined,
     });
 
+    // console.log("response,", response);
+    // console.log(await response.json());
+
     try {
-      // console.log(response.json());
       return await response.json();
     } catch (e) {
       console.error(`Error during fetch: ${e}`);

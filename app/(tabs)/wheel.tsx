@@ -11,13 +11,28 @@ import { Disk } from "@/api/disk";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function WheelScreen() {
-  const [angle, setAngle] = useState<number>(45);
+  const [angle, setAngle] = useState<number>(-250); //RADIANT
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
-  const handleRotateDisk = (angle: number) => {
+  const submissionDelay = 3000;
+  const [requestSubmitted, setRequestSubmitted] = useState<boolean>(false);
+
+  const handleRotateDisk = async (angle: number) => {
+    if (angle > 360) {
+      angle = angle - 360;
+    }
+
+    if (requestSubmitted) return;
+    setRequestSubmitted(true);
+    setTimeout(() => {
+      setRequestSubmitted(false);
+    }, submissionDelay);
     setAngle(angle);
-    console.log(`Disk rotated to ${angle} degrees`);
-    Disk.rotate(45);
+
+    console.log(`Disk rotated to ${Math.round(angle)} degrees`);
+
+    // Disk.rotate(angle);
+    console.log(await Disk.rotate(Math.round(angle)));
   };
 
   const { user } = useAuth();

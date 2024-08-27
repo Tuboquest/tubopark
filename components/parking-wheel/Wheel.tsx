@@ -39,7 +39,7 @@ export const ClockDisk: FC<ClockDiskProps> = ({ onRotate, ...props }) => {
     onStart: ({ x, y }, ctx) => {
       const { theta: startTheta } = canvas2Polar(
         { x, y },
-        { x: RADIUS, y: RADIUS },
+        { x: RADIUS, y: RADIUS }
       );
       ctx.startTheta = startTheta;
       ctx.initialTheta = theta.value;
@@ -48,7 +48,7 @@ export const ClockDisk: FC<ClockDiskProps> = ({ onRotate, ...props }) => {
     onActive: ({ x, y }, ctx) => {
       const { theta: newTheta } = canvas2Polar(
         { x, y },
-        { x: RADIUS, y: RADIUS },
+        { x: RADIUS, y: RADIUS }
       );
       let deltaTheta = newTheta - ctx.startTheta;
 

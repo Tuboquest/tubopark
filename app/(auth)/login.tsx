@@ -35,7 +35,7 @@ export default function LoginScreen() {
       return;
     }
 
-    router?.push("/(tabs)");
+    router?.push("(tabs)/wheel");
   };
 
   return (

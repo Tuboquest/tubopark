@@ -6,7 +6,7 @@ export class Disk {
   }
 
   static rotate(angleNumber: number): Promise<any> {
-    return Fetch.call("/rotate", Method.POST, {
+    return Fetch.call("/c/rotate", Method.POST, {
       angle: String(angleNumber),
     });
   }

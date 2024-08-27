@@ -10,13 +10,13 @@ export default function CameraScreen() {
         <Text style={styles.text}>Camera page coming soon</Text>
       </View>
 
-      <Video
+      {/* <Video
         source={{ uri: "https://youtu.be/H3XIJYEPdus?si=8qsKO0SpqyCyAJu9." }}
         style={styles.video}
         controls={true}
         resizeMode="cover"
         repeat={true}
-      />
+      /> */}
     </GradientBackground>
   );
 }

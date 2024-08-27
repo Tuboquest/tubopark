@@ -1,27 +1,60 @@
-import { Text, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import * as Location from "expo-location";
 
-import { GradientBackground } from "@/components/GradientBackground";
+export default function MapsScreen() {
+  const [location, setLocation] = useState<any>();
 
-export default function MapScreen() {
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location.coords);
+    })();
+  }, []);
+
   return (
-    <GradientBackground>
-      <View style={styles.titleContainer}>
-        <Text style={styles.text}>Map page coming soon</Text>
-      </View>
-    </GradientBackground>
+    <View style={styles.container}>
+      {location && (
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          provider="google"
+        >
+          <Marker
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+            title={"Votre position"}
+            description={"Ceci est votre position actuelle"}
+          />
+        </MapView>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
     flex: 1,
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    margin: 10,
   },
-  text: {
-    color: "white",
-    fontSize: 24,
-    fontWeight: "bold",
+  map: {
+    width: "100%",
+    height: "100%",
   },
 });
