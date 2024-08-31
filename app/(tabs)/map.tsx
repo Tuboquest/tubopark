@@ -19,10 +19,10 @@ export default function MapsScreen() {
           setLocation(location.coords);
         })
         .catch((e) => {
-          /*setLocation({
+          setLocation({
             latitude: 48.5835364327068,
             longitude: 7.7500315180398935,
-          });*/
+          });
         });
     })();
   }, []);
