@@ -16,19 +16,20 @@
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyACV8FnQGZDcYF_V6nXdQYvNlIHRDe_p-Y"
-      }
+      },
+      "bundleIdentifier": "com.phlostock.tuboparkapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.phlostock.tuboparkapp",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyACV8FnQGZDcYF_V6nXdQYvNlIHRDe_p-Y"
         }
-      }
+      },
+      "package": "com.phlostock.tuboparkapp"
     },
     "web": {
       "bundler": "metro",
@@ -38,7 +39,6 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-build-properties",
       [
         "expo-build-properties",
         {
