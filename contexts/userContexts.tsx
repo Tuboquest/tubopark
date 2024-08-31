@@ -11,7 +11,7 @@ export interface UserContextType {
 }
 
 export const UserContext = createContext<UserContextType>(
-  {} as UserContextType
+  {} as UserContextType,
 );
 
 export const UserProvider = ({ children }: { children: ReactElement }) => {
@@ -22,6 +22,7 @@ export const UserProvider = ({ children }: { children: ReactElement }) => {
     setToken(token);
     setUser(user);
     Fetch.setToken(user.token);
+    console.log("token: ", token);
   };
 
   const logout = () => {

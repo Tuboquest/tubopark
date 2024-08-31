@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "tuboquest-app",
-    "slug": "tuboquest-app",
+    "name": "tubopark-app",
+    "slug": "tubopark-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,7 +16,8 @@
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyACV8FnQGZDcYF_V6nXdQYvNlIHRDe_p-Y"
-      }
+      },
+      "bundleIdentifier": "com.phlostock.tuboparkapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -35,7 +36,10 @@
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": ["expo-router", "expo-font"],
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ],
     "experiments": {
       "typedRoutes": true
     },
@@ -47,6 +51,6 @@
         "projectId": "700dbb87-de74-40aa-b07e-92eaedc11928"
       }
     },
-    "owner": "phlostock"
+    "owner": "tuboquest"
   }
 }

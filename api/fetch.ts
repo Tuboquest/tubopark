@@ -20,10 +20,19 @@ export class Fetch {
     return this.call("/me", Method.GET);
   }
 
+  static rotateDisc(angle: number) {
+    return this.call("/c/rotate", Method.POST, {
+      angle: angle.toString(),
+      date: new Date().toDateString(),
+    });
+  }
+
+  static getDisks() {}
+
   private static getUrl(endpoint: string): string {
     if (!this.baseURL) {
       throw new Error(
-        "Base URL is not defined. Please check your environment configuration."
+        "Base URL is not defined. Please check your environment configuration.",
       );
     }
     let baseUrl = this.baseURL + endpoint;
@@ -37,7 +46,7 @@ export class Fetch {
   static async call(
     endpoint: string,
     method: Method = Method.GET,
-    body?: { [key: string]: string }
+    body?: { [key: string]: string },
   ) {
     const url = this.getUrl(endpoint);
 
@@ -63,7 +72,7 @@ export class Fetch {
 
     try {
       let r = await response.json();
-      // console.log(r);
+      console.log(r);
       return r;
     } catch (e) {
       console.error(`Error during fetch: ${e}`);

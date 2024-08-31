@@ -13,7 +13,7 @@ import { User } from "@/types/User";
 import { Fetch } from "@/api";
 
 export default function WheelScreen() {
-  const [angle, setAngle] = useState<number>(0); //RADIANT
+  const [angle, setAngle] = useState<number>(12.05); //RADIANT
 
   const [user, setUserState] = useState<User | undefined>();
 
@@ -32,7 +32,12 @@ export default function WheelScreen() {
     setTimeout(() => {
       setRequestSubmitted(false);
     }, submissionDelay);
-    setAngle(newAngle);
+    Fetch?.rotateDisc(newAngle)
+      .then((data) => {
+        console.log("ok, the disc rotated - setting new angle");
+        setAngle(newAngle);
+      })
+      .catch((e) => console.error("Disc rotation: ", e));
 
     if (user?.has_disk) {
       console.log(`Disk rotated to ${Math.round(newAngle)} degrees`);

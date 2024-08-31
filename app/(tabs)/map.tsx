@@ -21,7 +21,7 @@ export default function MapsScreen() {
 
   return (
     <View style={styles.container}>
-      {location && (
+      {location && ( // Bloque la vue de la map si pas de localisation
         <MapView
           style={styles.map}
           initialRegion={{
