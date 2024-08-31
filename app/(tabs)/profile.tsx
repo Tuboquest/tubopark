@@ -93,6 +93,8 @@ export default function ProfileScreen() {
           <MenuItem
             icon={require("@/assets/iconly/curved/Activity.png")}
             title="Statistics"
+            onPress={() => router.push("(profil)/statistics")}
+
           />
           <MenuItem
             icon={require("@/assets/iconly/curved/Chart.png")}
