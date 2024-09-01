@@ -1,9 +1,19 @@
-import { Image, StyleSheet, Platform, Text, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Platform,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
 
-import Video from "react-native-video";
 import WebView from "react-native-webview";
 import { GradientBackground } from "@/components/GradientBackground";
 import React from "react";
+import { Theme } from "@/constants/Theme";
+import { Colors } from "@/constants/Colors";
+import { LinearGradient } from "expo-linear-gradient";
+import { Feather } from "@expo/vector-icons";
 
 export default function CameraScreen() {
   const jwtToken =
