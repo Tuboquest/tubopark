@@ -27,7 +27,8 @@
         "googleMaps": {
           "apiKey": "AIzaSyACV8FnQGZDcYF_V6nXdQYvNlIHRDe_p-Y"
         }
-      }
+      },
+      "package": "com.tuboquest.tuboparkapp"
     },
     "web": {
       "bundler": "metro",
