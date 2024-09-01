@@ -1,57 +1,130 @@
-import { Image, StyleSheet, Platform, Text, View } from "react-native";
-
-import Video from "react-native-video";
+import React from "react";
+import { View, Text, Button, TouchableOpacity } from "react-native";
 import WebView from "react-native-webview";
 import { GradientBackground } from "@/components/GradientBackground";
-import React from "react";
+import { Theme } from "@/constants/Theme";
+import { Colors } from "@/constants/Colors";
+import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
-export default function CameraScreen() {
+export default function VideoStreamScreen() {
   const jwtToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidHVib3F1ZXN0LXRlc3QiLCJleHAiOjE3MjQ3ODc4NDJ9.Ozc_vIKo3CryPJR-3Tqhm9BltS2s4-byZSlFuNG_70o";
+    "9ce7894750a47ae9406ae8fc29263989cf41ca66e4d538f22698d012456d3c12";
+
   return (
     <GradientBackground>
-      <View style={styles.titleContainer}>
-        <Text style={styles.text}>Camera page coming soon</Text>
-      </View>
-
-      {/* <Video
-        source={{ uri: "https://youtu.be/H3XIJYEPdus?si=8qsKO0SpqyCyAJu9." }}
-        style={styles.video}
-        controls={true}
-        resizeMode="cover"
-        repeat={true}
-      /> */}
-
-      {/* <WebView
-        originWhitelist={["*"]}
-        source={{
-          uri: "http://192.168.1.27:8000/api/video",
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-            "Content-Type": "application/json",
-          },
+      <View
+        style={{
+          paddingHorizontal: Theme?.paddingHorizontal,
         }}
-      /> */}
+      >
+        <Text
+          style={{
+            fontSize: 32,
+            color: Colors?.dark?.text,
+            fontWeight: "bold",
+          }}
+        >
+          Sentinel
+        </Text>
+        <Text
+          style={{
+            marginTop: 15,
+            fontSize: 16,
+            color: Colors?.dark?.text,
+          }}
+        >
+          Stay connected with your vehicle in real-time through our live stream
+          feature, video surveillance from your car's remote device, right at
+          your fingertips.
+        </Text>
+        <View
+          style={{
+            marginTop: 40,
+            height: 210,
+            borderRadius: 25,
+            backgroundColor: "red",
+            overflow: "hidden",
+          }}
+        >
+          <WebView
+            originWhitelist={["*"]}
+            source={{
+              uri: "http://192.168.1.27:8000/api/video",
+              // uri: "http://172.20.10.7:8000/api/video",
+              headers: {
+                Authorization: `Bearer ${jwtToken}`,
+                "Content-Type": "application/json",
+              },
+            }}
+          />
+        </View>
+        <View
+          style={{
+            marginTop: 25,
+            position: "relative",
+            height: 220,
+            width: "100%",
+            borderRadius: 25,
+            overflow: "hidden",
+            opacity: 0.8,
+          }}
+        >
+          <LinearGradient
+            colors={["#1E95D950", "#00000090"]}
+            start={{ x: 0, y: 0.9 }}
+            end={{ x: 0.5, y: 0 }}
+            style={{
+              height: "100%",
+              width: "100%",
+              padding: 25,
+              justifyContent: "space-between",
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 28,
+                  color: Colors?.dark?.text,
+                  fontWeight: "bold",
+                  marginBottom: 10,
+                }}
+              >
+                Coming soon
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: Colors?.dark?.text,
+                }}
+              >
+                ASVP agent detection and live notifications
+              </Text>
+            </View>
+            <TouchableOpacity
+              disabled
+              style={{
+                backgroundColor: "white",
+                padding: 10,
+                borderRadius: 50,
+                alignSelf: "flex-end",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: Colors?.light?.text,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                AI Supercharged
+                <Feather name={"arrow-right"} size={16} />
+              </Text>
+            </TouchableOpacity>
+          </LinearGradient>
+        </View>
+      </View>
     </GradientBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 10,
-  },
-  text: {
-    color: "white",
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  video: {
-    width: 200 * 0.9,
-    height: 200,
-    borderRadius: 10,
-    marginBottom: 20,
-  },
-});
