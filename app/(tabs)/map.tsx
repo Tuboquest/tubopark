@@ -11,11 +11,19 @@ export default function MapsScreen() {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         console.log("Permission to access location was denied");
-        return;
+        // return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location.coords);
+      await Location.getCurrentPositionAsync()
+        .then((location) => {
+          setLocation(location.coords);
+        })
+        .catch((e) => {
+          setLocation({
+            latitude: 48.5835364327068,
+            longitude: 7.7500315180398935,
+          });
+        });
     })();
   }, []);
 

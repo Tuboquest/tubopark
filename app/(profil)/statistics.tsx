@@ -1,5 +1,6 @@
+import { Stats } from "@/api/statistics";
 import { GradientBackground } from "@/components/GradientBackground";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,14 +12,12 @@ import {
 
 import {
   LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
 } from "react-native-chart-kit";
 
 export default function StatisticScreen() {
+
+  const [statisticsState,
+    setStatisticsState] = useState<any>();
   const data = {
     labels: [
       "January",
@@ -41,14 +40,24 @@ export default function StatisticScreen() {
     ],
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const tampData = await Stats.getStatistics();
+      setStatisticsState([...tampData]);
+    };
+    fetchData();
+  }, []);
+
+  console.log("stats : ", statisticsState);
+
   return (
     <GradientBackground>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Your Statistics</Text>
         </View>
-        <Text style={styles.title}>Time app used</Text>
-        <LineChart
+        <Text style={styles.title}>number of times used</Text>
+        {statisticsState ? <LineChart
           data={{
             labels: ["January", "February", "March", "April", "May", "June"],
             datasets: [
@@ -60,7 +69,7 @@ export default function StatisticScreen() {
           width={350} // from react-native
           height={220}
           // yAxisLabel="day"
-          yAxisSuffix="days"
+          yAxisSuffix=""
           yAxisInterval={1} // optional, defaults to 1
           chartConfig={{
             backgroundColor: "#074264",
@@ -83,7 +92,9 @@ export default function StatisticScreen() {
             marginVertical: 8,
             borderRadius: 16,
           }}
-        />
+        /> :
+        <></>
+        }
       </View>
     </GradientBackground>
   );

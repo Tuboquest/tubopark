@@ -88,12 +88,12 @@ export default function RootLayout() {
               name="(profil)/notifications"
               options={{ headerShown: false }}
             />
+              <Stack.Screen
+                name="(profil)/statistics"
+                options={{ headerShown: false }}
+              />
             <Stack.Screen
               name="(profil)/payment"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="(others)/statistic"
               options={{ headerShown: false }}
             />
             <Stack.Screen
